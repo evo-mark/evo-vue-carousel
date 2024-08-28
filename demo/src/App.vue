@@ -40,6 +40,7 @@
 			per-page="1"
 			gap="40"
 			pause-on-hover
+			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
 			<div v-for="slide in slides" :key="slide">
@@ -48,11 +49,13 @@
 		</EvoVueCarousel>
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
+			wrap
 			mode="gallery"
 			:responsive="responsiveConfig"
 			per-page="1"
 			gap="40"
 			pause-on-hover
+			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
 			<div v-for="slide in slides" :key="slide">

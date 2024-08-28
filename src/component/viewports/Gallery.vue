@@ -1,12 +1,17 @@
 <template>
-	<div class="evo-vue-carousel__viewport evo-vue-carousel__viewport--gallery min-h-12 relative">
+	<div
+		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--gallery min-h-12 relative"
+		:class="{
+			'is-navigating': isNavigating,
+		}"
+	>
 		<Transition
 			mode="in-out"
 			enter-active-class="transition-all duration-1000 absolute inset-0"
 			leave-active-class="transition-none absolute hidden"
 			enter-from-class="opacity-0"
-			@enter="isTransitioning = true"
-			@leave="isTransitioning = false"
+			@before-enter="setIsNavigating(true)"
+			@after-leave="setIsNavigating(false)"
 		>
 			<div :key="currentIndex" class="flex">
 				<component
@@ -22,10 +27,11 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { computed } from "vue";
 import { slice, concat } from "lodash-es";
 import { useConfig } from "../../composables/useConfig";
-import { useCurrentIndex, useSetCurrentIndex } from "../../composables/useCurrentIndex";
+import { useCurrentIndex } from "../../composables/useCurrentIndex";
+import { useIsNavigating, useSetIsNavigating } from "../../composables/useIsNavigating";
 
 const props = defineProps({
 	slides: {
@@ -34,7 +40,8 @@ const props = defineProps({
 	},
 });
 
-const isTransitioning = ref(false);
+const isNavigating = useIsNavigating();
+const setIsNavigating = useSetIsNavigating();
 
 const config = useConfig();
 const currentIndex = useCurrentIndex();

@@ -10,7 +10,7 @@
 			class="evo-vue-carousel__viewport-track flex flex-row"
 			:class="[
 				{
-					'is-sliding': isSliding,
+					'is-navigating': isNavigating,
 					'autoplay-active': autoplayIsActive,
 				},
 				disableTransition ? 'transition-none' : 'transition-all',
@@ -44,6 +44,7 @@ import { nextFrame } from "../../utils/animation";
 import { loopedValue } from "../../utils/loopedValue";
 import { useElementSize, useIntervalFn } from "@vueuse/core";
 import { ref, computed, watch, onMounted } from "vue";
+import { useIsNavigating, useSetIsNavigating } from "../../composables/useIsNavigating";
 
 const props = defineProps({
 	slides: {
@@ -61,8 +62,10 @@ const updateOffset = (index) => {
 	return centre * -1;
 };
 
+const isNavigating = useIsNavigating();
+const setIsNavigating = useSetIsNavigating();
+
 const disableTransition = ref(true);
-const isSliding = ref(false);
 const sliderRef = ref(null);
 const { width: sliderWidth, height: sliderHeight } = useElementSize(sliderRef);
 const defaultSlideWidth = computed(() => {
@@ -81,7 +84,7 @@ const offsetDistance = computed(() => Math.abs(offset.value - offsetStart.value)
 const processedSlides = useProcessedSlides(props);
 
 watch(currentIndex, (v) => {
-	if (isSliding.value === false) {
+	if (isNavigating.value === false) {
 		offsetStart.value = offset.value;
 	}
 	offset.value = updateOffset(v);
@@ -101,10 +104,9 @@ const trackStyle = computed(() => ({
 }));
 
 const onSlideTransitionStart = () => {
-	isSliding.value = true;
+	setIsNavigating(true);
 };
 const onSlideTransitionEnd = async () => {
-	isSliding.value = false;
 	disableTransition.value = true;
 	await nextFrame();
 
@@ -113,6 +115,7 @@ const onSlideTransitionEnd = async () => {
 
 	await nextFrame();
 	disableTransition.value = false;
+	setIsNavigating(false);
 };
 
 const autoplayInterval = computed(() => config.value.autoplay ?? 0);

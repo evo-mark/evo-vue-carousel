@@ -20,6 +20,7 @@
 					:prev-class="props.navigationPrevClass"
 					:next-class="props.navigationNextClass"
 					:total-slides="slides.length"
+					:disable-on-navigation="props.disableOnNavigation"
 				/>
 			</ForwardSlots>
 		</div>
@@ -52,15 +53,20 @@ import {
 import { EVO_VUE_CAROUSEL_MODE } from "../setup/constants.js";
 import { useResponsiveConfig } from "../composables/useResponsiveConfig";
 import { checkPosition } from "../utils/checkPosition";
-import { configKey, currentIndexKey, isHoveredKey, setCurrentIndexKey } from "../setup/keys";
+import {
+	configKey,
+	currentIndexKey,
+	isHoveredKey,
+	isNavigatingKey,
+	setCurrentIndexKey,
+	setIsNavigatingKey,
+} from "../setup/keys";
 
 const props = defineProps({
-	/** Testing */
 	autoplay: {
 		type: [Boolean, Number],
 		default: false,
 	},
-	/** Testing */
 	wrap: {
 		type: Boolean,
 		default: false,
@@ -189,6 +195,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	disableOnNavigation: {
+		type: Boolean,
+		default: false,
+	},
 	hoverDelayEnter: {
 		type: [String, Number],
 		default: 0,
@@ -223,6 +233,13 @@ const setCurrentIndex = (newIndex) => {
 };
 provide(currentIndexKey, readonly(currentIndex));
 provide(setCurrentIndexKey, setCurrentIndex);
+
+const isNavigating = ref(false);
+const setIsNavigating = (value) => {
+	isNavigating.value = value;
+};
+provide(isNavigatingKey, readonly(isNavigating));
+provide(setIsNavigatingKey, setIsNavigating);
 
 /* *********************************************
  * HOVER STATE

@@ -33,6 +33,7 @@ import { EVO_VUE_CAROUSEL_MODE } from "../../setup/constants.js";
 import { loopedValue } from "../../utils/loopedValue";
 import { useConfig } from "../../composables/useConfig";
 import { useSetCurrentIndex, useCurrentIndex } from "../../composables/useCurrentIndex";
+import { useIsNavigating } from "../../composables/useIsNavigating";
 
 defineOptions({
 	inheritAttrs: false,
@@ -55,13 +56,25 @@ const props = defineProps({
 		type: Number,
 		required: true,
 	},
+	disableOnNavigation: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const config = useConfig();
 const currentIndex = useCurrentIndex();
+const isNavigating = useIsNavigating();
 const pageEndIndex = computed(() => currentIndex.value + config.value.perPage);
-const disablePrev = computed(() => !config.value.wrap && currentIndex.value === 0);
-const disableNext = computed(() => !config.value.wrap && pageEndIndex.value === props.totalSlides);
+const disablePrev = computed(
+	() =>
+		(!config.value.wrap && currentIndex.value === 0) || (props.disableOnNavigation && isNavigating.value === true),
+);
+const disableNext = computed(
+	() =>
+		(!config.value.wrap && pageEndIndex.value === props.totalSlides) ||
+		(props.disableOnNavigation && isNavigating.value === true),
+);
 
 const setCurrentIndex = useSetCurrentIndex();
 const leftIcon =
