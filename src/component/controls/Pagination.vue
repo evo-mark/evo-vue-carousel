@@ -10,6 +10,7 @@
 					:page="page"
 					:page-index="index"
 					:is-active="isCurrentPage(index)"
+					:disabled="props.disableOnNavigation && isNavigating"
 				/>
 			</ForwardSlots>
 		</template>
@@ -19,6 +20,7 @@
 <script setup>
 import { computed } from "vue";
 import { useCurrentIndex } from "../../composables/useCurrentIndex";
+import { useIsNavigating } from "../../composables/useIsNavigating";
 import { chunk, findLastIndex } from "lodash-es";
 import PaginationItem from "./PaginationItem.vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
@@ -56,8 +58,13 @@ const props = defineProps({
 		type: String,
 		default: "",
 	},
+	disableOnNavigation: {
+		type: Boolean,
+		default: false,
+	},
 });
 
+const isNavigating = useIsNavigating();
 const pages = computed(() => {
 	const slideArray = Array.from(Array(props.totalSlides).keys());
 	const chunks = chunk(slideArray, props.perPage);

@@ -35,6 +35,7 @@
 				:total-slides="slides.length"
 				:per-page="config.perPage"
 				:wrap="config.wrap"
+				:disable-on-navigation="props.disableOnNavigation"
 			/>
 		</ForwardSlots>
 	</div>

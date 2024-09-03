@@ -57,14 +57,21 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	disabled: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const setCurrentIndex = useSetCurrentIndex();
 
 const onNavigate = (page) => {
+	if (props.disabled) return false;
 	setCurrentIndex(page[0]);
 };
 
-const _itemClass = computed(() => twMerge(props.class, props.isActive && props.activeClass));
+const _itemClass = computed(() =>
+	twMerge(props.class, props.isActive && props.activeClass, props.disabled && "pointer-events-none"),
+);
 const _itemDotClass = computed(() => twMerge(props.dotClass, props.isActive && props.dotActiveClass));
 </script>

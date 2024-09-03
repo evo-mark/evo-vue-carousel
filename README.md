@@ -1,5 +1,40 @@
-# Vue 3 + Vite
+autoplay [Boolean, Number]
+wrap: Boolean
+hideNavigation: Boolean
+hidePagination: Boolean
+responsive: Object
+perPage: [Number, String]
+slideBy: [Number, String]
+mode: String
+initialIndex: [String, Number]
+gap: [String, Number]
+viewportClass: String
+paginationClass: String
+paginationBackgroundClass: String
+paginationItemClass: String
+paginationItemActiveClass: String
+paginationItemDotClass: String
+paginationItemDotActiveClass: String
+navigationClass: String
+navigationItemClass: String
+navigationPrevClass: String
+navigationNextClass: String
+transitionSpeed: [String, Number]
+slideTransitionTimingClass: String
+pauseOnHover: Boolean
+disableOnNavigation: Boolean
+hoverDelayEnter: [String, Number]
+hoverDelayLeave: [String, Number]
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
-
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+RESPONSIVE
+"perPage",
+"mode",
+"autoplay",
+"wrap",
+"gap",
+"slideBy",
+"transitionSpeed",
+"pauseOnHover",
+"slideTransitionTimingClass",
+"hideNavigation",
+"hidePagination",
