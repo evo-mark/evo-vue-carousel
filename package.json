@@ -1,11 +1,13 @@
 {
     "name": "@adminui/evo-vue-carousel",
-    "private": true,
     "publishConfig": {
         "access": "restricted"
     },
     "version": "1.0.0",
     "type": "module",
+    "files": [
+        "dist"
+    ],
     "exports": {
         ".": {
             "development": {
@@ -18,8 +20,8 @@
             }
         },
         "./tailwind": {
-            "require": "./dist/plugins/tailwind-plugin.js",
-            "import": "./dist/plugins/tailwind-plugin.js"
+            "require": "./dist/tailwind-plugin.js",
+            "import": "./dist/tailwind-plugin.js"
         },
         "./tailwind-dev": {
             "require": "./src/plugins/tailwind-plugin.js",
@@ -28,11 +30,12 @@
     },
     "scripts": {
         "dev": "vite",
-        "build": "vite build",
+        "build": "vite build && cp ./src/plugins/tailwind-plugin.js ./dist/tailwind-plugin.js",
         "preview": "vite preview",
         "demo": "pnpm --filter='./demo' run dev",
         "demo:build": "pnpm --filter='./demo' run build",
-        "demo:preview": "pnpm --filter='./demo' run preview"
+        "demo:preview": "pnpm --filter='./demo' run preview",
+        "prepublishOnly": "npm run build"
     },
     "devDependencies": {
         "@eslint/js": "^9.9.1",
