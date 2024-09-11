@@ -1,6 +1,9 @@
 {
-    "name": "evo-vue-carousel",
+    "name": "@adminui/evo-vue-carousel",
     "private": true,
+    "publishConfig": {
+        "access": "restricted"
+    },
     "version": "1.0.0",
     "type": "module",
     "exports": {

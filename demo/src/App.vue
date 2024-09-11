@@ -73,8 +73,8 @@ const responsiveConfig = {
 		autoplay: true,
 	},
 	1024: {
-		perPage: 3,
-		slideBy: 3,
+		perPage: 1,
+		slideBy: 1,
 		gap: 0,
 	},
 	768: {
