@@ -1,13 +1,17 @@
+perPage: [Number, String]
+mode: String
 autoplay [Boolean, Number]
 wrap: Boolean
+gap: [String, Number]
+slideBy: [Number, String]
+transitionSpeed: [String, Number]
+pauseOnHover: Boolean
+slideTransitionTimingClass: String
 hideNavigation: Boolean
 hidePagination: Boolean
+
 responsive: Object
-perPage: [Number, String]
-slideBy: [Number, String]
-mode: String
 initialIndex: [String, Number]
-gap: [String, Number]
 viewportClass: String
 paginationClass: String
 paginationBackgroundClass: String
@@ -19,9 +23,6 @@ navigationClass: String
 navigationItemClass: String
 navigationPrevClass: String
 navigationNextClass: String
-transitionSpeed: [String, Number]
-slideTransitionTimingClass: String
-pauseOnHover: Boolean
 disableOnNavigation: Boolean
 hoverDelayEnter: [String, Number]
 hoverDelayLeave: [String, Number]
