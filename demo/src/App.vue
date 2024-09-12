@@ -43,9 +43,9 @@
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
-			<div v-for="slide in slides" :key="slide">
+			<Slide v-for="slide in slides" :key="slide">
 				<img :src="slide" />
-			</div>
+			</Slide>
 		</EvoVueCarousel>
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
@@ -58,15 +58,25 @@
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
-			<div v-for="slide in slides" :key="slide">
+			<Slide v-for="slide in slides" :key="slide">
 				<img :src="slide" />
-			</div>
+			</Slide>
 		</EvoVueCarousel>
 	</div>
 </template>
 
 <script setup>
 import { EvoVueCarousel } from "evo-vue-carousel";
+import { defineAsyncComponent } from "vue";
+
+const Slide = defineAsyncComponent(
+	() =>
+		new Promise((resolve) => {
+			setTimeout(() => {
+				resolve(import("./components/Slide.vue"));
+			}, 2000); // Delay of 2000ms (2 seconds)
+		}),
+);
 
 const responsiveConfig = {
 	something: {
