@@ -213,18 +213,32 @@ const props = defineProps({
 const config = useResponsiveConfig(props);
 provide(configKey, config);
 
+const resolveSlotItem = (contents) => {
+	if (!contents) return [];
+	else if (Array.isArray(contents) === false) contents = [contents];
+
+	for (let i = 0; i <= contents.length - 1; i++) {
+		if (contents[i].type === Fragment) {
+			contents[i] = resolveSlotItem(contents[i].children);
+		}
+		console.log(contents);
+	}
+
+	return contents;
+};
+
 const slides = computed(() => {
-	const slot = useSlots().default();
+	let slot = useSlots().default();
 	const slides = slot
 		.reduce((acc, curr) => {
-			if (curr.type === Fragment) acc.push(...curr.children);
-			else acc.push(curr);
+			acc.push(...resolveSlotItem(curr));
 			return acc;
 		}, [])
 		.map((slide, index) => {
 			slide.key ??= index;
 			return slide;
 		});
+	console.log(slides);
 	return slides;
 });
 

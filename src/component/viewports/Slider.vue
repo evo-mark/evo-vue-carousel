@@ -1,7 +1,7 @@
 <template>
 	<div
 		ref="sliderRef"
-		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider flex w-full overflow-hidden"
+		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider relative flex w-full overflow-hidden"
 		role="listbox"
 		:data-width="sliderWidth"
 		:data-height="sliderHeight"
@@ -76,7 +76,7 @@ const offset = ref(0);
 const offsetStart = ref(0);
 onMounted(async () => {
 	offset.value = updateOffset(0);
-	await nextFrame();
+	await nextFrame(2);
 	disableTransition.value = false;
 });
 const offsetDistance = computed(() => Math.abs(offset.value - offsetStart.value));
