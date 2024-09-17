@@ -1,6 +1,7 @@
 <template>
 	<div
-		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--gallery min-h-12 relative"
+		ref="galleryRef"
+		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--gallery min-h-12 h-full relative w-full overflow-hidden"
 		:class="{
 			'is-navigating': isNavigating,
 		}"
@@ -27,11 +28,12 @@
 </template>
 
 <script setup>
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import { slice, concat } from "lodash-es";
 import { useConfig } from "../../composables/useConfig";
 import { useCurrentIndex } from "../../composables/useCurrentIndex";
 import { useIsNavigating, useSetIsNavigating } from "../../composables/useIsNavigating";
+import { useElementSize } from "@vueuse/core";
 
 const props = defineProps({
 	slides: {
@@ -55,4 +57,7 @@ const viewport = computed(() => {
 	const second = slice(props.slides, 0, endRange % props.slides.length);
 	return concat(first, second);
 });
+
+const galleryRef = ref(null);
+const { height: galleryHeight } = useElementSize(galleryRef);
 </script>
