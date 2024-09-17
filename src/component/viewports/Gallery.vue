@@ -5,6 +5,7 @@
 		:class="{
 			'is-navigating': isNavigating,
 		}"
+		:data-height="galleryHeight"
 	>
 		<Transition
 			mode="in-out"
@@ -14,7 +15,7 @@
 			@before-enter="setIsNavigating(true)"
 			@after-leave="setIsNavigating(false)"
 		>
-			<div :key="currentIndex" class="flex">
+			<div :key="currentIndex" class="flex h-full overflow-hidden">
 				<component
 					:is="slide"
 					v-for="(slide, index) in viewport"

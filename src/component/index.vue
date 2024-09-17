@@ -1,7 +1,7 @@
 <template>
 	<div
 		ref="sliderRef"
-		class="evo-vue-carousel relative"
+		class="evo-vue-carousel relative h-full max-h-full"
 		:class="{
 			'is-hovered': isHovered,
 		}"
