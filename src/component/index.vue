@@ -1,7 +1,7 @@
 <template>
 	<div
 		ref="sliderRef"
-		class="evo-vue-carousel relative h-full max-h-full"
+		class="evo-vue-carousel relative max-h-full"
 		:class="{
 			'is-hovered': isHovered,
 		}"
@@ -45,7 +45,7 @@
 </template>
 
 <script setup>
-import { provide, useSlots, computed, Fragment, ref, readonly } from "vue";
+import { provide, useSlots, computed, Fragment, ref, readonly, h } from "vue";
 import { useElementHover } from "@vueuse/core";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import {
@@ -241,9 +241,11 @@ const resolveSlotItem = (contents, resolved = []) => {
 	return resolved;
 };
 
+const slots = useSlots();
+
 const slides = computed(() => {
-	let slot = useSlots().default();
-	const slides = slot
+	const defaultSlot = slots.default ? slots.default() : [];
+	const slides = defaultSlot
 		.reduce((acc, curr) => {
 			acc.push(...resolveSlotItem(curr));
 			return acc;
