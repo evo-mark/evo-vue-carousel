@@ -213,18 +213,29 @@ const props = defineProps({
 const config = useResponsiveConfig(props);
 provide(configKey, config);
 
-const resolveSlotItem = (contents) => {
-	if (!contents) return [];
+/**
+ * Ensures that the default slot is an array of vNodes
+ * @param { import("vue").VNode[] } contents The array to check
+ * @param { import("vue").VNode[] } resolved Resolved/unwrapped components
+ * @returns { import("vue").VNode[] }
+ */
+const resolveSlotItem = (contents, resolved = []) => {
+	if (!contents) return resolved;
 	else if (Array.isArray(contents) === false) contents = [contents];
 
 	for (let i = 0; i <= contents.length - 1; i++) {
 		if (contents[i].type === Fragment) {
-			contents[i] = resolveSlotItem(contents[i].children);
+			const temp = resolveSlotItem(contents[i].children);
+			resolved.push(...temp);
+		} else if (Array.isArray(contents[i])) {
+			const temp = resolveSlotItem(contents[i]);
+			resolved.push(...temp);
+		} else {
+			resolved.push(contents[i]);
 		}
-		console.log(contents);
 	}
 
-	return contents;
+	return resolved;
 };
 
 const slides = computed(() => {
@@ -238,7 +249,6 @@ const slides = computed(() => {
 			slide.key ??= index;
 			return slide;
 		});
-	console.log(slides);
 	return slides;
 });
 
