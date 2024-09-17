@@ -6,9 +6,12 @@
 			'is-hovered': isHovered,
 		}"
 	>
-		<div class="evo-vue-carousel__content h-full max-h-full">
+		<div class="evo-vue-carousel__content h-full max-h-full relative">
 			<EvoVueCarouselViewportGallery v-if="config.mode === 'gallery'" :slides="slides" />
 			<EvoVueCarouselViewportSlider v-else :slides="slides" :class="props.viewportClass" />
+			<div v-if="$slots.overlay" class="evo-vue-carousel__overlay absolute inset-0">
+				<slot name="overlay"></slot>
+			</div>
 			<ForwardSlots
 				v-if="config.hideNavigation !== true"
 				:slots="$slots"
