@@ -1,6 +1,6 @@
 <template>
 	<div
-		ref="sliderRef"
+		ref="viewportRef"
 		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider relative flex w-full max-h-full overflow-hidden"
 		role="listbox"
 		:data-width="sliderWidth"
@@ -66,8 +66,8 @@ const isNavigating = useIsNavigating();
 const setIsNavigating = useSetIsNavigating();
 
 const disableTransition = ref(true);
-const sliderRef = ref(null);
-const { width: sliderWidth, height: sliderHeight } = useElementSize(sliderRef);
+const viewportRef = ref(null);
+const { width: sliderWidth, height: sliderHeight } = useElementSize(viewportRef);
 const defaultSlideWidth = computed(() => {
 	const totalGap = config.value.gap > 0 ? config.value.gap * (config.value.perPage - 1) : 0;
 	return (sliderWidth.value - totalGap) / config.value.perPage + "px";

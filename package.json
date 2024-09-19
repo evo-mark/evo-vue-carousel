@@ -39,15 +39,15 @@
     },
     "devDependencies": {
         "@eslint/js": "^9.10.0",
-        "@vitejs/plugin-vue": "^5.1.3",
+        "@vitejs/plugin-vue": "^5.1.4",
         "eslint": "^9.10.0",
         "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-jsdoc": "^50.2.3",
+        "eslint-plugin-jsdoc": "^50.2.4",
         "eslint-plugin-vue": "^9.28.0",
         "globals": "^15.9.0",
         "prettier": "^3.3.3",
         "tailwind-merge": "^2.5.2",
-        "tailwindcss": "^3.4.11",
+        "tailwindcss": "^3.4.12",
         "vite": "^5.4.6",
         "vite-plugin-lib-inject-css": "^2.1.1",
         "vue": "^3.5.6"
@@ -59,6 +59,7 @@
     "packageManager": "pnpm@9.6.0+sha512.38dc6fba8dba35b39340b9700112c2fe1e12f10b17134715a4aa98ccf7bb035e76fd981cf0bb384dfa98f8d6af5481c2bef2f4266a24bfa20c34eb7147ce0b5e",
     "dependencies": {
         "@evomark/vue-forward-slots": "^6.1.3",
+        "@skirtle/vue-vnode-utils": "^0.1.4",
         "@vueuse/core": "^11.1.0",
         "lodash-es": "^4.17.21",
         "vue3-icon": "^2.1.0"
