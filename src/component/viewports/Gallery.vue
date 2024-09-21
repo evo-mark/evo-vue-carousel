@@ -15,50 +15,106 @@
 			@before-enter="setIsNavigating(true)"
 			@after-leave="setIsNavigating(false)"
 		>
-			<div :key="currentIndex" class="flex h-full overflow-hidden">
-				<component
-					:is="slide"
-					v-for="(slide, index) in viewport"
-					:key="index"
-					class="evo-vue-carousel__slide evo-vue-carousel__slide--visible"
-				>
-				</component>
-			</div>
+			<SliderTrack :key="currentIndex">
+				<slot></slot>
+			</SliderTrack>
 		</Transition>
 	</div>
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import ViewportSlide from "./Slide.vue";
+import { ref, h, normalizeClass, Fragment, computed } from "vue";
 import { slice, concat } from "lodash-es";
-import { useConfig } from "../../composables/useConfig";
-import { useCurrentIndex } from "../../composables/useCurrentIndex";
-import { useIsNavigating, useSetIsNavigating } from "../../composables/useIsNavigating";
+import { useCarouselClient } from "../../composables/useCarousel";
 import { useElementSize } from "@vueuse/core";
+import { replaceChildren, COMPONENTS_AND_ELEMENTS } from "@skirtle/vue-vnode-utils";
 
 const props = defineProps({
-	slides: {
-		type: Array,
-		default: () => [],
+	totalSlides: {
+		type: Number,
+		default: 0,
+	},
+	isInit: {
+		type: Boolean,
+		default: false,
 	},
 });
 
-const isNavigating = useIsNavigating();
-const setIsNavigating = useSetIsNavigating();
-
-const config = useConfig();
-const currentIndex = useCurrentIndex();
-
-const viewport = computed(() => {
-	const endRange = currentIndex.value + config.value.perPage;
-	if (config.value.wrap === false || endRange <= props.slides.length) {
-		return slice(props.slides, currentIndex.value, endRange);
-	}
-	const first = slice(props.slides, currentIndex.value, endRange);
-	const second = slice(props.slides, 0, endRange % props.slides.length);
-	return concat(first, second);
-});
+const { config, currentIndex, isNavigating, setIsNavigating } = useCarouselClient();
 
 const galleryRef = ref(null);
 const { height: galleryHeight } = useElementSize(galleryRef);
+
+/* *********************************************
+ * TRACK
+ * ******************************************* */
+/**
+ * Check which slides are visible in the viewport
+ * @param { number } startIndex The starting index for the viewport
+ * @param { number } totalVisible The total number of slides to show
+ * @param { number } count The total number of available slides
+ * @returns { number[] } An array of visible slide indexes
+ */
+function visible(startIndex, totalVisible, count) {
+	const result = [];
+
+	for (let i = 0; i < totalVisible; i++) {
+		result.push((startIndex + i) % count);
+	}
+
+	return result;
+}
+
+const SliderTrack = {
+	setup(_, { slots }) {
+		const visibleSlides = computed(() => visible(currentIndex.value, config.value.perPage, props.totalSlides));
+
+		return () => {
+			let defaultSlot = slots.default?.() || [];
+
+			while (Array.isArray(defaultSlot) && defaultSlot[0].type === Fragment) {
+				defaultSlot = defaultSlot[0].children;
+			}
+
+			let i = 0;
+			const availableSlides = replaceChildren(
+				defaultSlot,
+				(vnode) => {
+					const cloned = h(
+						ViewportSlide,
+						{
+							class: normalizeClass([
+								"evo-vue-carousel__slide evo-vue-carousel__slide--visible",
+								{
+									hidden: visibleSlides.value.includes(i) === false,
+								},
+							]),
+							role: "option",
+						},
+						{
+							default: () => [vnode],
+						},
+					);
+					i++;
+					return cloned;
+				},
+				COMPONENTS_AND_ELEMENTS,
+			);
+
+			const viewport = concat(
+				slice(availableSlides, currentIndex.value),
+				slice(availableSlides, 0, currentIndex.value),
+			);
+
+			return h(
+				"div",
+				{
+					class: normalizeClass(["flex h-full overflow-hidden"]),
+				},
+				viewport,
+			);
+		};
+	},
+};
 </script>

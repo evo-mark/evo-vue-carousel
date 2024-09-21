@@ -22,7 +22,7 @@
 <script setup>
 import { computed } from "vue";
 import { twMerge } from "tailwind-merge";
-import { useSetCurrentIndex } from "../../composables/useCurrentIndex";
+import { useCarouselClient } from "../../composables/useCarousel";
 
 defineOptions({
 	inheritAttrs: false,
@@ -63,7 +63,7 @@ const props = defineProps({
 	},
 });
 
-const setCurrentIndex = useSetCurrentIndex();
+const { setCurrentIndex } = useCarouselClient();
 
 const onNavigate = (page) => {
 	if (props.disabled) return false;

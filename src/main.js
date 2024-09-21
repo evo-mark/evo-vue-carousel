@@ -3,4 +3,4 @@ export { default as EvoVueCarouselPagination } from "./component/controls/Pagina
 export { default as EvoVueCarouselNavigation } from "./component/controls/Navigation.vue";
 export { default as EvoVueCarouselViewportSlider } from "./component/viewports/Slider.vue";
 export { default as EvoVueCarouselViewportGallery } from "./component/viewports/Gallery.vue";
-export { EVO_VUE_CAROUSEL_MODE } from "./setup/constants";
+export * from "./utils/constants";

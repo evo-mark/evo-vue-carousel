@@ -7,8 +7,19 @@
 		}"
 	>
 		<div class="evo-vue-carousel__content h-full max-h-full relative">
-			<EvoVueCarouselViewportGallery v-if="config.mode === 'gallery'" :slides="slides" />
-			<EvoVueCarouselViewportSlider v-else :slides="slides" :class="props.viewportClass" />
+			<ForwardSlots :slots="$slots" :only="['default']">
+				<EvoVueCarouselViewportGallery
+					v-if="config.mode === 'gallery'"
+					:total-slides="slideCount"
+					:is-init="sliderIsInit"
+				/>
+				<EvoVueCarouselViewportSlider
+					v-else
+					:class="props.viewportClass"
+					:total-slides="slideCount"
+					:is-init="sliderIsInit"
+				/>
+			</ForwardSlots>
 			<div v-if="$slots.overlay" class="evo-vue-carousel__overlay absolute inset-0">
 				<slot name="overlay"></slot>
 			</div>
@@ -20,9 +31,10 @@
 				<EvoVueCarouselNavigation
 					:class="props.navigationClass"
 					:item-class="props.navigationItemClass"
+					:item-size-class="props.navigationItemSizeClass"
 					:prev-class="props.navigationPrevClass"
 					:next-class="props.navigationNextClass"
-					:total-slides="slides.length"
+					:total-slides="slideCount"
 					:disable-on-navigation="props.disableOnNavigation"
 				/>
 			</ForwardSlots>
@@ -32,10 +44,11 @@
 				:class="props.paginationClass"
 				:background-class="props.paginationBackgroundClass"
 				:item-class="props.paginationItemClass"
+				:item-size-class="props.paginationItemSizeClass"
 				:item-active-class="props.paginationItemActiveClass"
 				:item-dot-class="props.paginationItemDotClass"
 				:item-dot-active-class="props.paginationItemDotActiveClass"
-				:total-slides="slides.length"
+				:total-slides="slideCount"
 				:per-page="config.perPage"
 				:wrap="config.wrap"
 				:disable-on-navigation="props.disableOnNavigation"
@@ -45,8 +58,7 @@
 </template>
 
 <script setup>
-import { provide, useSlots, computed, Fragment, ref, readonly, h } from "vue";
-import { useElementHover } from "@vueuse/core";
+import { ref } from "vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import {
 	EvoVueCarouselPagination,
@@ -54,17 +66,9 @@ import {
 	EvoVueCarouselViewportSlider,
 	EvoVueCarouselViewportGallery,
 } from "../main.js";
-import { EVO_VUE_CAROUSEL_MODE } from "../setup/constants.js";
-import { useResponsiveConfig } from "../composables/useResponsiveConfig";
-import { checkPosition } from "../utils/checkPosition";
-import {
-	configKey,
-	currentIndexKey,
-	isHoveredKey,
-	isNavigatingKey,
-	setCurrentIndexKey,
-	setIsNavigatingKey,
-} from "../setup/keys";
+import { EVO_VUE_CAROUSEL_MODE } from "../utils/constants.js";
+import { useRegisterSlide } from "../composables/useRegisterSlide.js";
+import { useCarouselHost } from "../composables/useCarousel.js";
 
 const props = defineProps({
 	autoplay: {
@@ -127,7 +131,7 @@ const props = defineProps({
 	 */
 	paginationBackgroundClass: {
 		type: String,
-		default: "bg-black/40 py-1 backdrop-blur",
+		default: "bg-zinc-900/10 py-1 backdrop-blur-sm",
 	},
 	/**
 	 * @namespace Classes
@@ -135,7 +139,7 @@ const props = defineProps({
 	paginationItemClass: {
 		type: String,
 		default:
-			"border-gray-300 border-2 rounded-full p-0.5 flex justify-center items-center hover:border-white transition-colors duration-300",
+			"border-white/50 border-2 rounded-full p-0.5 flex justify-center items-center hover:border-white/100 transition-colors duration-300",
 	},
 	/**
 	 * @namespace Classes
@@ -149,14 +153,21 @@ const props = defineProps({
 	 */
 	paginationItemDotClass: {
 		type: String,
-		default: "size-4 rounded-full origin-center scale-0 bg-gray-300 transition-transform",
+		default: "rounded-full origin-center scale-0 bg-white/50 transition-transform",
+	},
+	/**
+	 * @namespace Classes
+	 */
+	paginationItemSizeClass: {
+		type: String,
+		default: "size-4",
 	},
 	/**
 	 * @namespace Classes
 	 */
 	paginationItemDotActiveClass: {
 		type: String,
-		default: "scale-100",
+		default: "scale-100 bg-white/70",
 	},
 	/**
 	 * @namespace Classes
@@ -171,7 +182,14 @@ const props = defineProps({
 	navigationItemClass: {
 		type: String,
 		default:
-			"size-16 relative before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity hover:before:opacity-10 active:before:opacity-20 before:duration-300 disabled:pointer-events-none disabled:opacity-30 transition-opacity",
+			"relative before:absolute before:inset-0 before:bg-current before:opacity-0 before:transition-opacity hover:before:opacity-10 active:before:opacity-20 before:duration-300 disabled:pointer-events-none disabled:opacity-30 transition-opacity",
+	},
+	/**
+	 * @namespace Classes
+	 */
+	navigationItemSizeClass: {
+		type: String,
+		default: "size-16",
 	},
 	/**
 	 * @namespace Classes
@@ -213,72 +231,7 @@ const props = defineProps({
 	},
 });
 
-const config = useResponsiveConfig(props);
-provide(configKey, config);
-
-/**
- * Ensures that the default slot is an array of vNodes
- * @param { import("vue").VNode[] } contents The array to check
- * @param { import("vue").VNode[] } resolved Resolved/unwrapped components
- * @returns { import("vue").VNode[] }
- */
-const resolveSlotItem = (contents, resolved = []) => {
-	if (!contents) return resolved;
-	else if (Array.isArray(contents) === false) contents = [contents];
-
-	for (let i = 0; i <= contents.length - 1; i++) {
-		if (contents[i].type === Fragment) {
-			const temp = resolveSlotItem(contents[i].children);
-			resolved.push(...temp);
-		} else if (Array.isArray(contents[i])) {
-			const temp = resolveSlotItem(contents[i]);
-			resolved.push(...temp);
-		} else {
-			resolved.push(contents[i]);
-		}
-	}
-
-	return resolved;
-};
-
-const slots = useSlots();
-
-const slides = computed(() => {
-	const defaultSlot = slots.default ? slots.default() : [];
-	const slides = defaultSlot
-		.reduce((acc, curr) => {
-			acc.push(...resolveSlotItem(curr));
-			return acc;
-		}, [])
-		.map((slide, index) => {
-			slide.key ??= index;
-			return slide;
-		});
-	return slides;
-});
-
-const currentIndex = ref(checkPosition(props.initialIndex, slides.value.length, config));
-const setCurrentIndex = (newIndex) => {
-	currentIndex.value = checkPosition(newIndex, slides.value.length, config);
-};
-provide(currentIndexKey, readonly(currentIndex));
-provide(setCurrentIndexKey, setCurrentIndex);
-
-const isNavigating = ref(false);
-const setIsNavigating = (value) => {
-	isNavigating.value = value;
-};
-provide(isNavigatingKey, readonly(isNavigating));
-provide(setIsNavigatingKey, setIsNavigating);
-
-/* *********************************************
- * HOVER STATE
- * ******************************************* */
 const sliderRef = ref(null);
-const isHovered = useElementHover(sliderRef, {
-	delayEnter: +props.hoverDelayEnter,
-	delayLeave: +props.hoverDelayLeave,
-});
-
-provide(isHoveredKey, readonly(isHovered));
+const { slideCount, isInit: sliderIsInit } = useRegisterSlide();
+const { config, isHovered } = useCarouselHost(props, slideCount, sliderRef);
 </script>

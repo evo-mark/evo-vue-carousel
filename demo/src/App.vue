@@ -43,9 +43,9 @@
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
-			<Slide v-for="slide in slides" :key="slide">
+			<div v-for="slide in slides" :key="slide">
 				<img :src="slide" />
-			</Slide>
+			</div>
 		</EvoVueCarousel>
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
@@ -56,36 +56,33 @@
 			gap="40"
 			pause-on-hover
 			disable-on-navigation
-			pagination-background-class="py-1 bg-white/50 backdrop-blur"
+			navigation-item-size-class="size-8"
 		>
-			<Slide v-for="slide in slides" :key="slide">
+			<div v-for="slide in slides" :key="slide">
 				<img :src="slide" />
-			</Slide>
+			</div>
+			<template #pagination="{ isNavigating }">
+				<span
+					:class="{
+						'text-red-600': isNavigating,
+					}"
+					>Testing</span
+				>
+			</template>
 		</EvoVueCarousel>
 	</div>
 </template>
 
 <script setup>
 import { EvoVueCarousel } from "evo-vue-carousel";
-import { defineAsyncComponent } from "vue";
-
-const Slide = defineAsyncComponent(
-	() =>
-		new Promise((resolve) => {
-			setTimeout(() => {
-				resolve(import("./components/Slide.vue"));
-			}, 2000); // Delay of 2000ms (2 seconds)
-		}),
-);
 
 const responsiveConfig = {
 	something: {
 		autoplay: true,
 	},
 	1024: {
-		perPage: 1,
+		perPage: 3,
 		slideBy: 1,
-		gap: 0,
 	},
 	768: {
 		gap: 20,

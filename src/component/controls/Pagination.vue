@@ -1,29 +1,30 @@
 <template>
 	<div class="evo-vue-carousel__pagination" :class="props.backgroundClass">
-		<template v-for="(page, index) in pages" :key="page">
-			<ForwardSlots :slots="$slots">
-				<PaginationItem
-					:class="props.itemClass"
-					:active-class="props.itemActiveClass"
-					:dot-class="props.itemDotClass"
-					:dot-active-class="props.itemDotActiveClass"
-					:page="page"
-					:page-index="index"
-					:is-active="isCurrentPage(index)"
-					:disabled="props.disableOnNavigation && isNavigating"
-				/>
-			</ForwardSlots>
-		</template>
+		<slot name="pagination" :page="pages" :is-current-page="isCurrentPage" :is-navigating="isNavigating">
+			<template v-for="(page, index) in pages" :key="page">
+				<ForwardSlots :slots="$slots" only="pagination-item">
+					<PaginationItem
+						:class="props.itemClass"
+						:active-class="props.itemActiveClass"
+						:dot-class="normalizeClass([props.itemDotClass, props.itemSizeClass])"
+						:dot-active-class="props.itemDotActiveClass"
+						:page="page"
+						:page-index="index"
+						:is-active="isCurrentPage(index)"
+						:disabled="props.disableOnNavigation && isNavigating"
+					/>
+				</ForwardSlots>
+			</template>
+		</slot>
 	</div>
 </template>
 
 <script setup>
-import { computed } from "vue";
-import { useCurrentIndex } from "../../composables/useCurrentIndex";
-import { useIsNavigating } from "../../composables/useIsNavigating";
+import { computed, normalizeClass } from "vue";
 import { chunk, findLastIndex } from "lodash-es";
 import PaginationItem from "./PaginationItem.vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
+import { useCarouselClient } from "../../composables/useCarousel";
 
 const props = defineProps({
 	totalSlides: {
@@ -46,6 +47,10 @@ const props = defineProps({
 		type: String,
 		default: "",
 	},
+	itemSizeClass: {
+		type: String,
+		default: "",
+	},
 	itemActiveClass: {
 		type: String,
 		default: "",
@@ -64,7 +69,8 @@ const props = defineProps({
 	},
 });
 
-const isNavigating = useIsNavigating();
+const { currentIndex, isNavigating } = useCarouselClient();
+
 const pages = computed(() => {
 	const slideArray = Array.from(Array(props.totalSlides).keys());
 	const chunks = chunk(slideArray, props.perPage);
@@ -79,8 +85,6 @@ const pages = computed(() => {
 		return ch;
 	});
 });
-
-const currentIndex = useCurrentIndex();
 
 const isCurrentPage = (index) => {
 	const foundIndex = findLastIndex(pages.value, (item) => item.includes(currentIndex.value));

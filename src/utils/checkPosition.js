@@ -1,8 +1,9 @@
 /**
- * @param { number } newIndex
- * @param { number } totalSlides
- * @param { import("vue").ComputedRef<import("../composables/useResponsiveConfig").ResponsiveConfig> } config
- * @returns { number }
+ * Checks the index position is valid
+ * @param { number } newIndex The target index
+ * @param { number } totalSlides The total number of slides
+ * @param { import("vue").ComputedRef<import("../composables/useResponsiveConfig").ResponsiveConfig> } config The current config
+ * @returns { number } The validated target index
  */
 export const checkPosition = (newIndex, totalSlides, config) => {
 	// Non-wrap should stop on the last page
