@@ -57,9 +57,13 @@ const { height: galleryHeight } = useElementSize(galleryRef);
  * @returns { number[] } An array of visible slide indexes
  */
 function visible(startIndex, totalVisible, count) {
+	console.log("visible fn");
+	console.table({ startIndex, totalVisible, count });
 	const result = [];
+	if (count === 0) return result;
 
 	for (let i = 0; i < totalVisible; i++) {
+		console.log(startIndex + i, (startIndex + i) % count);
 		result.push((startIndex + i) % count);
 	}
 
