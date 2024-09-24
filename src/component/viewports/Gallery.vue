@@ -24,7 +24,7 @@
 
 <script setup>
 import ViewportSlide from "./Slide.vue";
-import { ref, h, normalizeClass, Fragment, computed } from "vue";
+import { ref, h, normalizeClass, Fragment, computed, watch } from "vue";
 import { slice, concat } from "lodash-es";
 import { useCarouselClient } from "../../composables/useCarousel";
 import { useElementSize } from "@vueuse/core";
@@ -69,8 +69,18 @@ function visible(startIndex, totalVisible, count) {
 const SliderTrack = {
 	setup(_, { slots }) {
 		const visibleSlides = computed(() => visible(currentIndex.value, config.value.perPage, props.totalSlides));
+		watch(
+			visibleSlides,
+			(v) => {
+				console.log(v);
+			},
+			{
+				immediate: true,
+			},
+		);
 
 		return () => {
+			console.log("Render gallery");
 			let defaultSlot = slots.default?.() || [];
 
 			while (Array.isArray(defaultSlot) && defaultSlot[0].type === Fragment) {
@@ -81,6 +91,7 @@ const SliderTrack = {
 			const availableSlides = replaceChildren(
 				defaultSlot,
 				(vnode) => {
+					console.log(`Slide ${i}, visible: ${visibleSlides.value.includes(i)}`);
 					const cloned = h(
 						ViewportSlide,
 						{
