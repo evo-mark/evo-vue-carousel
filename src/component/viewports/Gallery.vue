@@ -57,13 +57,10 @@ const { height: galleryHeight } = useElementSize(galleryRef);
  * @returns { number[] } An array of visible slide indexes
  */
 function visible(startIndex, totalVisible, count) {
-	console.log("visible fn");
-	console.table({ startIndex, totalVisible, count });
 	const result = [];
 	if (count === 0) return result;
 
 	for (let i = 0; i < totalVisible; i++) {
-		console.log(startIndex + i, (startIndex + i) % count);
 		result.push((startIndex + i) % count);
 	}
 
@@ -73,18 +70,8 @@ function visible(startIndex, totalVisible, count) {
 const SliderTrack = {
 	setup(_, { slots }) {
 		const visibleSlides = computed(() => visible(currentIndex.value, config.value.perPage, props.totalSlides));
-		watch(
-			visibleSlides,
-			(v) => {
-				console.log(v);
-			},
-			{
-				immediate: true,
-			},
-		);
 
 		return () => {
-			console.log("Render gallery");
 			let defaultSlot = slots.default?.() || [];
 
 			while (Array.isArray(defaultSlot) && defaultSlot[0].type === Fragment) {
@@ -95,7 +82,6 @@ const SliderTrack = {
 			const availableSlides = replaceChildren(
 				defaultSlot,
 				(vnode) => {
-					console.log(`Slide ${i}, visible: ${visibleSlides.value.includes(i)}`);
 					const cloned = h(
 						ViewportSlide,
 						{

@@ -34,7 +34,7 @@
 		</div>
 	</header>
 	<div class="container">
-		<EvoVueCarousel
+		<!-- <EvoVueCarousel
 			wrap
 			:responsive="responsiveConfig"
 			per-page="1"
@@ -46,10 +46,10 @@
 			<div v-for="slide in slides" :key="slide">
 				<img :src="slide" />
 			</div>
-		</EvoVueCarousel>
+		</EvoVueCarousel> -->
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
-			wrap
+			:wrap="false"
 			mode="gallery"
 			:responsive="responsiveConfig"
 			per-page="1"
@@ -82,7 +82,6 @@ const responsiveConfig = {
 	},
 	1024: {
 		perPage: 3,
-		slideBy: 1,
 	},
 	768: {
 		gap: 20,
