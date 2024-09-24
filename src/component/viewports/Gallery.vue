@@ -85,7 +85,7 @@ const SliderTrack = {
 						ViewportSlide,
 						{
 							class: normalizeClass([
-								"evo-vue-carousel__slide evo-vue-carousel__slide--visible",
+								"evo-vue-carousel__slide evo-vue-carousel__slide--visible w-full h-full",
 								{
 									hidden: visibleSlides.value.includes(i) === false,
 								},
