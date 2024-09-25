@@ -7,7 +7,7 @@
 		:data-height="sliderHeight"
 	>
 		<ForwardSlots :slots="$slots" only="default">
-			<SliderTrack />
+			<SliderTrack :gap="config.gap" />
 		</ForwardSlots>
 	</div>
 </template>
@@ -122,23 +122,26 @@ const SliderTrack = {
 	setup(props, { slots }) {
 		return () => {
 			const children = slots.default?.() || [];
-			const original = replaceChildren(children, (vnode) => {
-				console.log(vnode);
-				return h(
-					ViewportSlide,
-					{
-						class: "evo-vue-carousel__slide shrink-0 grow-0",
-						role: "option",
-						style: {
-							flexBasis: "var(--slide-width, 0px)",
-							marginRight: `${config.value.gap}px`,
+			const original = replaceChildren(
+				children,
+				(vnode) => {
+					return h(
+						ViewportSlide,
+						{
+							class: "evo-vue-carousel__slide shrink-0 grow-0",
+							role: "option",
+							style: {
+								flexBasis: "var(--slide-width, 0px)",
+								marginRight: `${props.gap}px`,
+							},
 						},
-					},
-					{
-						default: () => [vnode],
-					},
-				);
-			});
+						{
+							default: () => [vnode],
+						},
+					);
+				},
+				COMPONENTS_AND_ELEMENTS,
+			);
 
 			const prefix = replaceChildren(original, (vnode) => {
 				return cloneVNode(vnode, {
