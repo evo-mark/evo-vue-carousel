@@ -19,8 +19,16 @@ import { nextFrame } from "../../utils/animation";
 import { loopedValue } from "../../utils/loopedValue";
 import { useElementSize, useIntervalFn } from "@vueuse/core";
 import { ref, computed, watch, h, normalizeClass, cloneVNode } from "vue";
-import { replaceChildren, COMPONENTS_AND_ELEMENTS } from "@skirtle/vue-vnode-utils";
+import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide.vue";
+
+const FILTER_COMPONENTS = Object.freeze({
+	element: true,
+	component: true,
+	static: true,
+	comment: false,
+	text: false,
+});
 
 const props = defineProps({
 	totalSlides: {
@@ -119,6 +127,12 @@ watch(isHovered, (v) => {
  * TRACK
  * ******************************************* */
 const SliderTrack = {
+	props: {
+		gap: {
+			type: Number,
+			default: 0,
+		},
+	},
 	setup(props, { slots }) {
 		return () => {
 			const children = slots.default?.() || [];
@@ -140,21 +154,29 @@ const SliderTrack = {
 						},
 					);
 				},
-				COMPONENTS_AND_ELEMENTS,
+				FILTER_COMPONENTS,
 			);
 
-			const prefix = replaceChildren(original, (vnode) => {
-				return cloneVNode(vnode, {
-					class: "evo-vue-carousel__slide-clone evo-vue-carousel__slide-prefix",
-					isClone: true,
-				});
-			});
-			const suffix = replaceChildren(original, (vnode) => {
-				return cloneVNode(vnode, {
-					class: "evo-vue-carousel__slide-clone evo-vue-carousel__slide-suffix",
-					isClone: true,
-				});
-			});
+			const prefix = replaceChildren(
+				original,
+				(vnode) => {
+					return cloneVNode(vnode, {
+						class: "evo-vue-carousel__slide-clone evo-vue-carousel__slide-prefix",
+						isClone: true,
+					});
+				},
+				FILTER_COMPONENTS,
+			);
+			const suffix = replaceChildren(
+				original,
+				(vnode) => {
+					return cloneVNode(vnode, {
+						class: "evo-vue-carousel__slide-clone evo-vue-carousel__slide-suffix",
+						isClone: true,
+					});
+				},
+				FILTER_COMPONENTS,
+			);
 
 			return h(
 				"div",

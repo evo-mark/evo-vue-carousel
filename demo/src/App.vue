@@ -34,19 +34,26 @@
 		</div>
 	</header>
 	<div class="container">
-		<!-- <EvoVueCarousel
+		<EvoVueCarousel
 			wrap
 			:responsive="responsiveConfig"
 			per-page="1"
-			gap="40"
+			slide-by="1"
+			:gap="40"
 			pause-on-hover
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
-			<div v-for="slide in slides" :key="slide">
-				<img :src="slide" />
+			<div v-for="slide in slides" :key="slide" class="relative w-full h-full">
+				<img :src="slide" class="w-full h-full object-cover" />
+				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-500 flex flex-col">
+					<div class="flex gap-4">
+						<SvgIcon v-for="n in 4" :key="n" :path="mdiStar" size="48" />
+					</div>
+					Testing
+				</div>
 			</div>
-		</EvoVueCarousel> -->
+		</EvoVueCarousel>
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
 			:wrap="false"
@@ -74,7 +81,9 @@
 </template>
 
 <script setup>
+import { mdiStar } from "@mdi/js";
 import { EvoVueCarousel } from "evo-vue-carousel";
+import SvgIcon from "vue3-icon";
 
 const responsiveConfig = {
 	something: {
