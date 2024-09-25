@@ -13,14 +13,15 @@
 </template>
 
 <script setup>
+import { concat } from "lodash-es";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import { useCarouselClient } from "../../composables/useCarousel";
 import { nextFrame } from "../../utils/animation";
 import { loopedValue } from "../../utils/loopedValue";
 import { useElementSize, useIntervalFn } from "@vueuse/core";
-import { ref, computed, watch, h, normalizeClass, cloneVNode } from "vue";
+import { ref, computed, watch, h, normalizeClass } from "vue";
 import { replaceChildren } from "@skirtle/vue-vnode-utils";
-import ViewportSlide from "./Slide.vue";
+import ViewportSlide from "./Slide";
 
 const FILTER_COMPONENTS = Object.freeze({
 	element: true,
@@ -65,7 +66,9 @@ const trackStyle = computed(() => ({
 
 const updateOffset = (index) => {
 	const slideWidth = parseFloat(defaultSlideWidth.value);
-	const centre = (slideWidth + config.value.gap) * (props.totalSlides + index);
+
+	const offsetSlides = config.value.wrap ? props.totalSlides + index : index;
+	const centre = (slideWidth + config.value.gap) * offsetSlides;
 	return centre * -1;
 };
 
@@ -134,20 +137,32 @@ const SliderTrack = {
 		},
 	},
 	setup(props, { slots }) {
-		return () => {
-			const children = slots.default?.() || [];
-			const original = replaceChildren(
-				children,
+		const extractSlot = () => slots.default?.() || [];
+		const generateSlides = (position) => {
+			let i = 0;
+			const keyAppend = position ? `_${position}` : "";
+			return replaceChildren(
+				extractSlot(),
 				(vnode) => {
+					i++;
 					return h(
 						ViewportSlide,
 						{
-							class: "evo-vue-carousel__slide shrink-0 grow-0",
+							class: normalizeClass([
+								"evo-vue-carousel__slide shrink-0 grow-0",
+								{
+									"evo-vue-carousel__slide-clone": !!position,
+									"evo-vue-carousel__slide-prefix": position === "prefix",
+									"evo-vue-carousel__slide-suffix": position === "suffix",
+								},
+							]),
 							role: "option",
 							style: {
 								flexBasis: "var(--slide-width, 0px)",
 								marginRight: `${props.gap}px`,
 							},
+							key: `slide_${i}${keyAppend}`,
+							isClone: !!position,
 						},
 						{
 							default: () => [vnode],
@@ -156,29 +171,10 @@ const SliderTrack = {
 				},
 				FILTER_COMPONENTS,
 			);
+		};
 
-			const prefix = replaceChildren(
-				original,
-				(vnode) => {
-					return cloneVNode(vnode, {
-						class: "evo-vue-carousel__slide-clone evo-vue-carousel__slide-prefix",
-						isClone: true,
-					});
-				},
-				FILTER_COMPONENTS,
-			);
-			const suffix = replaceChildren(
-				original,
-				(vnode) => {
-					return cloneVNode(vnode, {
-						class: "evo-vue-carousel__slide-clone evo-vue-carousel__slide-suffix",
-						isClone: true,
-					});
-				},
-				FILTER_COMPONENTS,
-			);
-
-			return h(
+		return () =>
+			h(
 				"div",
 				{
 					class: normalizeClass([
@@ -194,9 +190,10 @@ const SliderTrack = {
 					onTransitionstart: onSlideTransitionStart,
 					onTransitionend: onSlideTransitionEnd,
 				},
-				config.value.wrap ? [...prefix, ...original, ...suffix] : [...original],
+				config.value.wrap
+					? concat(generateSlides("prefix"), generateSlides(), generateSlides("suffix"))
+					: generateSlides,
 			);
-		};
 	},
 };
 </script>

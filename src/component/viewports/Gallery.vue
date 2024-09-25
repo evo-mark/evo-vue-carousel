@@ -23,8 +23,8 @@
 </template>
 
 <script setup>
-import ViewportSlide from "./Slide.vue";
-import { ref, h, normalizeClass, Fragment, computed, watch } from "vue";
+import ViewportSlide from "./Slide";
+import { ref, h, normalizeClass, Fragment, computed } from "vue";
 import { slice, concat } from "lodash-es";
 import { useCarouselClient } from "../../composables/useCarousel";
 import { useElementSize } from "@vueuse/core";

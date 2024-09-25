@@ -36,8 +36,7 @@
 	<div class="container">
 		<EvoVueCarousel
 			wrap
-			:responsive="responsiveConfig"
-			per-page="1"
+			per-page="3"
 			slide-by="1"
 			:gap="40"
 			pause-on-hover
@@ -48,13 +47,14 @@
 				<img :src="slide" class="w-full h-full object-cover" />
 				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-500 flex flex-col">
 					<div class="flex gap-4">
+						<HelloWorld />
 						<SvgIcon v-for="n in 4" :key="n" :path="mdiStar" size="48" />
 					</div>
 					Testing
 				</div>
 			</div>
 		</EvoVueCarousel>
-		<h2 class="my-4">Gallery Mode</h2>
+		<!-- <h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
 			:wrap="false"
 			mode="gallery"
@@ -76,7 +76,7 @@
 					>Testing</span
 				>
 			</template>
-		</EvoVueCarousel>
+		</EvoVueCarousel> -->
 	</div>
 </template>
 
@@ -84,6 +84,7 @@
 import { mdiStar } from "@mdi/js";
 import { EvoVueCarousel } from "evo-vue-carousel";
 import SvgIcon from "vue3-icon";
+import HelloWorld from "./components/Hello.vue";
 
 const responsiveConfig = {
 	something: {
