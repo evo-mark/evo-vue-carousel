@@ -24,7 +24,7 @@
         "prettier": "^3.3.3",
         "tailwindcss": "^3.4.13",
         "vite": "^5.4.8",
-        "vue": "^3.5.8"
+        "vue": "^3.5.9"
     },
     "peerDependencies": {
         "vue": "^3.4.38"
