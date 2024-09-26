@@ -14,5 +14,8 @@ export default defineConfig({
 			external: ["vue"],
 		},
 	},
+	css: {
+		postcss: {},
+	},
 	plugins: [vue(), libInjectCss()],
 });
