@@ -23,11 +23,11 @@
 </template>
 
 <script setup>
+import { useElementSize, useIntervalFn } from "@vueuse/core";
 import ViewportSlide from "./Slide";
-import { ref, h, normalizeClass, Fragment, computed } from "vue";
+import { ref, h, normalizeClass, Fragment, computed, watch } from "vue";
 import { slice, concat } from "lodash-es";
 import { useCarouselClient } from "../../composables/useCarousel";
-import { useElementSize } from "@vueuse/core";
 import { replaceChildren, COMPONENTS_AND_ELEMENTS } from "@skirtle/vue-vnode-utils";
 
 const props = defineProps({
@@ -41,10 +41,29 @@ const props = defineProps({
 	},
 });
 
-const { config, currentIndex, isNavigating, setIsNavigating } = useCarouselClient();
+const { config, currentIndex, isNavigating, isHovered, setIsNavigating, setCurrentIndex } = useCarouselClient();
 
 const galleryRef = ref(null);
 const { height: galleryHeight } = useElementSize(galleryRef);
+
+/* *********************************************************
+ * AUTOPLAY
+ ********************************************************* */
+
+const autoplayInterval = computed(() => config.value.autoplay ?? 0);
+
+const {
+	pause: pauseAutoplay,
+	resume: resumeAutoplay,
+	/* isActive: autoplayIsActive, */
+} = useIntervalFn(() => {
+	setCurrentIndex(currentIndex.value + config.value.slideBy);
+}, autoplayInterval);
+
+watch(isHovered, (v) => {
+	if (v) pauseAutoplay();
+	else resumeAutoplay();
+});
 
 /* *********************************************
  * TRACK
@@ -74,7 +93,7 @@ const SliderTrack = {
 		return () => {
 			let defaultSlot = slots.default?.() || [];
 
-			while (Array.isArray(defaultSlot) && defaultSlot[0].type === Fragment) {
+			while (Array.isArray(defaultSlot) && defaultSlot[0]?.type === Fragment) {
 				defaultSlot = defaultSlot[0].children;
 			}
 
