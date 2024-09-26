@@ -192,7 +192,7 @@ const SliderTrack = {
 				},
 				config.value.wrap
 					? concat(generateSlides("prefix"), generateSlides(), generateSlides("suffix"))
-					: generateSlides,
+					: generateSlides(),
 			);
 	},
 };
