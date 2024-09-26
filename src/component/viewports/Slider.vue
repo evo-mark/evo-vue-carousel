@@ -85,7 +85,7 @@ watch(
 	() => props.isInit,
 	async (v) => {
 		if (v) {
-			offset.value = updateOffset(0);
+			offset.value = updateOffset(currentIndex.value);
 			await nextFrame(2);
 			disableTransition.value = false;
 		}
