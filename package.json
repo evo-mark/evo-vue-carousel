@@ -8,22 +8,12 @@
     ],
     "exports": {
         ".": {
-            "development": {
-                "require": "./src/main.js",
-                "import": "./src/main.js"
-            },
-            "default": {
-                "require": "./dist/evo-vue-carousel.js",
-                "import": "./dist/evo-vue-carousel.js"
-            }
+            "require": "./dist/evo-vue-carousel.js",
+            "import": "./dist/evo-vue-carousel.js"
         },
         "./tailwind": {
             "require": "./dist/tailwind.js",
             "import": "./dist/tailwind.js"
-        },
-        "./tailwind-dev": {
-            "require": "./src/node/tailwind.js",
-            "import": "./src/node/tailwind.js"
         }
     },
     "scripts": {
