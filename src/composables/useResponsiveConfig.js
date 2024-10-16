@@ -36,7 +36,7 @@ function processConfigValues(value, key) {
 			else return +value;
 		case "autoplay":
 			if (!value) return false;
-			else if (value === true) return 2000;
+			else if (value === true) return 5000;
 			else return +value;
 		case "wrap":
 		case "pauseOnHover":
