@@ -1,7 +1,7 @@
 <template>
 	<div
 		ref="viewportRef"
-		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider relative flex w-full max-h-full overflow-hidden"
+		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider relative flex w-full h-full max-h-full overflow-hidden"
 		role="listbox"
 		:data-width="sliderWidth"
 		:data-height="sliderHeight"
