@@ -64,7 +64,7 @@ const props = defineProps({
 	},
 });
 
-const { config, currentIndex, setCurrentIndex, isNavigating } = useCarouselClient();
+const { config, currentIndex, setCurrentIndex, isNavigating, pauseAutoplay, resumeAutoplay } = useCarouselClient();
 
 const pageEndIndex = computed(() => currentIndex.value + config.value.perPage);
 const disablePrev = computed(
@@ -101,12 +101,19 @@ const checkPosition = (target) => {
 	return target;
 };
 
+const resetAutoplay = () => {
+	pauseAutoplay();
+	resumeAutoplay();
+};
+
 const onPrev = () => {
 	const target = checkPosition(currentIndex.value - config.value.slideBy);
 	setCurrentIndex(target);
+	resetAutoplay();
 };
 const onNext = () => {
 	const target = checkPosition(currentIndex.value + config.value.slideBy);
 	setCurrentIndex(target);
+	resetAutoplay();
 };
 </script>

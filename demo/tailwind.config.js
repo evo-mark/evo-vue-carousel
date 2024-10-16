@@ -1,4 +1,4 @@
-import { evoVueCarouselTwContent } from "evo-vue-carousel/tailwind-dev";
+import { evoVueCarouselTwContent } from "evo-vue-carousel/tailwind";
 
 /** @type {import('tailwindcss').Config} */
 export default {

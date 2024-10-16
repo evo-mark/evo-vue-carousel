@@ -63,11 +63,13 @@ const props = defineProps({
 	},
 });
 
-const { setCurrentIndex } = useCarouselClient();
+const { setCurrentIndex, pauseAutoplay, resumeAutoplay } = useCarouselClient();
 
 const onNavigate = (page) => {
 	if (props.disabled) return false;
 	setCurrentIndex(page[0]);
+	pauseAutoplay();
+	resumeAutoplay();
 };
 
 const _itemClass = computed(() =>

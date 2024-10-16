@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { useElementSize, useIntervalFn } from "@vueuse/core";
+import { useElementSize } from "@vueuse/core";
 import ViewportSlide from "./Slide";
 import { ref, h, normalizeClass, Fragment, computed, watch } from "vue";
 import { slice, concat } from "lodash-es";
@@ -41,7 +41,8 @@ const props = defineProps({
 	},
 });
 
-const { config, currentIndex, isNavigating, isHovered, setIsNavigating, setCurrentIndex } = useCarouselClient();
+const { config, currentIndex, isNavigating, isHovered, setIsNavigating, pauseAutoplay, resumeAutoplay } =
+	useCarouselClient();
 
 const galleryRef = ref(null);
 const { height: galleryHeight } = useElementSize(galleryRef);
@@ -49,17 +50,6 @@ const { height: galleryHeight } = useElementSize(galleryRef);
 /* *********************************************************
  * AUTOPLAY
  ********************************************************* */
-
-const autoplayInterval = computed(() => config.value.autoplay ?? 0);
-
-const {
-	pause: pauseAutoplay,
-	resume: resumeAutoplay,
-	/* isActive: autoplayIsActive, */
-} = useIntervalFn(() => {
-	setCurrentIndex(currentIndex.value + config.value.slideBy);
-}, autoplayInterval);
-
 watch(isHovered, (v) => {
 	if (v) pauseAutoplay();
 	else resumeAutoplay();

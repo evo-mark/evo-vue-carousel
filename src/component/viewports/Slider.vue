@@ -18,7 +18,7 @@ import { ForwardSlots } from "@evomark/vue-forward-slots";
 import { useCarouselClient } from "../../composables/useCarousel";
 import { nextFrame } from "../../utils/animation";
 import { loopedValue } from "../../utils/loopedValue";
-import { useElementSize, useIntervalFn } from "@vueuse/core";
+import { useElementSize } from "@vueuse/core";
 import { ref, computed, watch, h, normalizeClass } from "vue";
 import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide";
@@ -42,18 +42,19 @@ const props = defineProps({
 	},
 });
 
-const { config, currentIndex, setCurrentIndex, isHovered, isNavigating, setIsNavigating } = useCarouselClient();
+const {
+	config,
+	currentIndex,
+	setCurrentIndex,
+	isHovered,
+	isNavigating,
+	setIsNavigating,
+	pauseAutoplay,
+	resumeAutoplay,
+	autoplayIsActive,
+} = useCarouselClient();
 
 const disableTransition = ref(true);
-const autoplayInterval = computed(() => config.value.autoplay ?? 0);
-
-const {
-	pause: pauseAutoplay,
-	resume: resumeAutoplay,
-	isActive: autoplayIsActive,
-} = useIntervalFn(() => {
-	setCurrentIndex(currentIndex.value + config.value.slideBy);
-}, autoplayInterval);
 
 const calculateTransitionDuration = (distance, speed) => {
 	return (distance / speed) * 100;

@@ -36,6 +36,7 @@
 	<div class="container">
 		<EvoVueCarousel
 			wrap
+			autoplay
 			per-page="3"
 			slide-by="1"
 			:gap="40"
@@ -82,11 +83,11 @@
 
 <script setup>
 import { mdiStar } from "@mdi/js";
-import { EvoVueCarousel } from "evo-vue-carousel";
+import { EvoVueCarousel } from "../../src/main";
 import SvgIcon from "vue3-icon";
 import HelloWorld from "./components/Hello.vue";
 
-const responsiveConfig = {
+/* const responsiveConfig = {
 	something: {
 		autoplay: true,
 	},
@@ -104,7 +105,7 @@ const responsiveConfig = {
 		autoplay: true,
 		wrap: true,
 	},
-};
+}; */
 
 const slides = [
 	"https://picsum.photos/seed/sic-mundus-creatus-est/1920/1080",
