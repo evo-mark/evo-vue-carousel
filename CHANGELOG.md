@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.6
+
+-   **Improvement**: Handle edge cases for config variables
+
 ## v1.0.5
 
 -   **Improvement**: Moved autoplay interval function from the controls to the host provider

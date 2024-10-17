@@ -35,13 +35,15 @@ function processConfigValues(value, key) {
 			if (perPage === 1) return 0;
 			else return +value;
 		case "autoplay":
-			if (!value) return false;
-			else if (value === true) return 5000;
+			if (!value || value === "false" || value === "0") return false;
+			else if (value === true || value === "true") return 5000;
 			else return +value;
 		case "wrap":
 		case "pauseOnHover":
 		case "hideNavigation":
 		case "hidePagination":
+			if (value === "true") value = true;
+			else if (value === "false") value = false;
 			return isBoolean(value) ? value : !!value;
 		default:
 			return value;
