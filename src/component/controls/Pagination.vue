@@ -91,3 +91,13 @@ const isCurrentPage = (index) => {
 	return foundIndex === index;
 };
 </script>
+
+<style lang="postcss">
+.evo-vue-carousel__pagination {
+	@apply pointer-events-none;
+
+	> * {
+		@apply pointer-events-auto;
+	}
+}
+</style>

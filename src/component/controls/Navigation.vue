@@ -117,3 +117,13 @@ const onNext = () => {
 	resetAutoplay();
 };
 </script>
+
+<style lang="postcss">
+.evo-vue-carousel__navigation {
+	@apply pointer-events-none;
+
+	> * {
+		@apply pointer-events-auto;
+	}
+}
+</style>
