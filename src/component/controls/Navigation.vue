@@ -11,7 +11,7 @@
 					<SvgIcon :path="leftIcon" viewBox="0 0 48 48" class="w-full h-full" />
 				</button>
 			</slot>
-			<slot name="navigation-next" :on-click="onNext" :current-index="currentIndex">
+			<slot name="navigation-next" :on-click="onNext" :current-index="currentIndex" :disabled="disableNext">
 				<button
 					class="evo-vue-carousel__navigation-item evo-vue-carousel__navigation-next"
 					:class="_nextClasses"
