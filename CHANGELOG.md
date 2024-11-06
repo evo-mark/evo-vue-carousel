@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.8
+
+-   **BugFix**: Add missing disabled prop on navigation-next slot
+
 ## v1.0.7
 
 -   **BugFix**: Don't allow pagination and navigation containers to capture clicks
