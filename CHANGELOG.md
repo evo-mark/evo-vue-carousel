@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.0.9
+
+-   **BugFix**: Add missing disabled prop on pagination slot
+
 ## v1.0.8
 
 -   **BugFix**: Add missing disabled prop on navigation-next slot

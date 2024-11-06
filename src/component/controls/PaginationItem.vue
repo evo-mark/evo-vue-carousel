@@ -6,6 +6,7 @@
 		:page-index="props.pageIndex"
 		:attrs="{
 			onClick: () => onNavigate(props.page, props.pageIndex),
+			disabled: props.disabled,
 		}"
 	>
 		<button
