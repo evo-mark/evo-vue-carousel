@@ -36,10 +36,10 @@
 	<div class="container">
 		<EvoVueCarousel
 			wrap
-			autoplay
-			per-page="3"
+			per-page="1"
 			slide-by="1"
 			:gap="40"
+			initial-index="46"
 			pause-on-hover
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
@@ -47,7 +47,7 @@
 			<div v-for="slide in slides" :key="slide" class="relative w-full h-full">
 				<img :src="slide" class="w-full h-full object-cover" />
 				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-500 flex flex-col">
-					<div class="flex gap-4">
+					<div class="flex gap-4 flex-col">
 						<HelloWorld />
 						<SvgIcon v-for="n in 4" :key="n" :path="mdiStar" size="48" />
 					</div>

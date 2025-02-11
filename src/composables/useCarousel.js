@@ -1,4 +1,4 @@
-import { provide, inject, ref, readonly, computed } from "vue";
+import { provide, inject, ref, readonly, computed, watch, nextTick } from "vue";
 import { useResponsiveConfig } from "./useResponsiveConfig";
 import { checkPosition } from "../utils/checkPosition";
 import { useElementHover, useIntervalFn } from "@vueuse/core";
@@ -11,13 +11,30 @@ const isNavigatingKey = Symbol.for("evo-vue-carousel__is-navigating");
 const autoplayFnKey = Symbol.for("evo-vue-carousel__autoplay-fn");
 
 export const useCarouselHost = (props, slideCount, sliderRef) => {
+	const isInit = ref(false);
 	const isNavigating = ref(false);
 	const config = useResponsiveConfig(props);
-	const currentIndex = ref(checkPosition(props.initialIndex, slideCount.value, config));
+	const currentIndex = ref(0);
 	const isHovered = useElementHover(sliderRef, {
 		delayEnter: +props.hoverDelayEnter,
 		delayLeave: +props.hoverDelayLeave,
 	});
+
+	const stop = watch(
+		slideCount,
+		async (c) => {
+			if (c > 0) {
+				currentIndex.value = checkPosition(+props.initialIndex, c, config);
+				if (currentIndex.value > c) currentIndex.value = c - 1;
+				isInit.value = true;
+				await nextTick();
+				stop();
+			}
+		},
+		{
+			immediate: true,
+		},
+	);
 
 	const autoplayInterval = computed(() => config.value.autoplay ?? 0);
 	const setCurrentIndex = (newIndex) => {
@@ -47,6 +64,7 @@ export const useCarouselHost = (props, slideCount, sliderRef) => {
 		config,
 		currentIndex: readonly(currentIndex),
 		isHovered,
+		isInit,
 	};
 };
 

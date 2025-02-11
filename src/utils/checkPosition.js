@@ -1,5 +1,7 @@
 import { EVO_VUE_CAROUSEL_MODE } from "./constants";
 
+/* const clamp = (num, min, max) => Math.min(Math.max(num, min), max); */
+
 /**
  * Checks the index position is valid
  * @param { number } newIndex The target index
@@ -12,7 +14,7 @@ export const checkPosition = (newIndex, totalSlides, config) => {
 	const isGallery = config.value.mode === EVO_VUE_CAROUSEL_MODE.GALLERY;
 	const shouldWrap = config.value.wrap === true;
 	const perPage = config.value.perPage;
-	const finalPage = totalSlides - perPage;
+	const finalPage = Math.max(totalSlides - perPage, 0);
 
 	if (isGallery) {
 		if ((newIndex < 0 && shouldWrap === false) || finalPage < 0 || newIndex > totalSlides) return 0;

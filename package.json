@@ -25,31 +25,31 @@
         "demo:preview": "pnpm --filter='./demo' run preview",
         "prepublishOnly": "npm run build"
     },
-    "devDependencies": {
-        "@eslint/js": "^9.14.0",
-        "@vitejs/plugin-vue": "^5.1.4",
-        "eslint": "^9.14.0",
-        "eslint-config-prettier": "^9.1.0",
-        "eslint-plugin-jsdoc": "^50.4.3",
-        "eslint-plugin-vue": "^9.30.0",
-        "globals": "^15.12.0",
-        "prettier": "^3.3.3",
-        "tailwind-merge": "^2.5.4",
-        "tailwindcss": "^3.4.14",
-        "vite": "^5.4.10",
-        "vite-plugin-lib-inject-css": "^2.1.1",
-        "vue": "^3.5.12"
-    },
-    "peerDependencies": {
-        "tailwind-merge": "^2.5.2",
-        "vue": "^3.4.38"
-    },
-    "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
     "dependencies": {
         "@evomark/vue-forward-slots": "^6.2.0",
         "@skirtle/vue-vnode-utils": "^0.2.0",
-        "@vueuse/core": "^11.2.0",
+        "@vueuse/core": "^12.5.0",
         "lodash-es": "^4.17.21",
         "vue3-icon": "^3.0.3"
-    }
+    },
+    "devDependencies": {
+        "@eslint/js": "^9.20.0",
+        "@vitejs/plugin-vue": "^5.2.1",
+        "eslint": "^9.20.0",
+        "eslint-config-prettier": "^10.0.1",
+        "eslint-plugin-jsdoc": "^50.6.3",
+        "eslint-plugin-vue": "^9.32.0",
+        "globals": "^15.14.0",
+        "prettier": "^3.5.0",
+        "tailwind-merge": "^2.6.0",
+        "tailwindcss": "^3.4.17",
+        "vite": "^6.1.0",
+        "vite-plugin-lib-inject-css": "^2.2.1",
+        "vue": "^3.5.13"
+    },
+    "peerDependencies": {
+        "tailwind-merge": "^2.5.2|^3.0.0",
+        "vue": "^3.4.38"
+    },
+    "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
 }
