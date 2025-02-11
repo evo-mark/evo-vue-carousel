@@ -58,7 +58,7 @@
 </template>
 
 <script setup>
-import { ref, watch } from "vue";
+import { ref } from "vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import {
 	EvoVueCarouselPagination,
@@ -233,14 +233,5 @@ const props = defineProps({
 
 const sliderRef = ref(null);
 const { slideCount, isInit: sliderIsInit } = useRegisterSlide();
-watch(
-	slideCount,
-	(v) => {
-		console.log(v);
-	},
-	{
-		immediate: true,
-	},
-);
 const { config, isHovered } = useCarouselHost(props, slideCount, sliderRef);
 </script>
