@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v1.0.12
+## v1.0.13
 
 - **Improvement**: Added support for `prefers-reduced-motion` to disable transitions
 - **Improvement**: New slot `controls` available with slotProps: functions `play`, `pause` and the status `playing`.
