@@ -94,10 +94,10 @@ const isCurrentPage = (index) => {
 
 <style lang="postcss">
 .evo-vue-carousel__pagination {
-	@apply pointer-events-none;
+	pointer-events: none;
 
 	> * {
-		@apply pointer-events-auto;
+		pointer-events: auto;
 	}
 }
 </style>
