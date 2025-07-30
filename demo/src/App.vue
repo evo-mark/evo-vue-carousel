@@ -36,30 +36,41 @@
 	<div class="container">
 		<EvoVueCarousel
 			wrap
+			:autoplay="2000"
 			per-page="1"
 			slide-by="1"
-			:gap="40"
-			initial-index="46"
-			pause-on-hover
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
 			<div v-for="slide in slides" :key="slide" class="relative w-full h-full">
 				<img :src="slide" class="w-full h-full object-cover" />
-				<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-500 flex flex-col">
+				<div
+					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-500 flex flex-col bg-zinc-900 p-4 rounded-xl"
+				>
 					<div class="flex gap-4 flex-col">
 						<HelloWorld />
-						<SvgIcon v-for="n in 4" :key="n" :path="mdiStar" size="48" />
+						<div class="flex items-center">
+							<SvgIcon v-for="n in 4" :key="n" :path="mdiStar" size="48" />
+						</div>
 					</div>
 					Testing
 				</div>
 			</div>
+			<template #controls="{ play, pause, playing }">
+				<div class="absolute top-full left-0 w-full flex justify-end">
+					<button v-if="playing" @click="pause">
+						<SvgIcon :path="mdiPause" />
+					</button>
+					<button v-else @click="play">
+						<SvgIcon :path="mdiPlay" />
+					</button>
+				</div>
+			</template>
 		</EvoVueCarousel>
-		<!-- <h2 class="my-4">Gallery Mode</h2>
+		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
 			:wrap="false"
 			mode="gallery"
-			:responsive="responsiveConfig"
 			per-page="1"
 			gap="40"
 			pause-on-hover
@@ -77,12 +88,12 @@
 					>Testing</span
 				>
 			</template>
-		</EvoVueCarousel> -->
+		</EvoVueCarousel>
 	</div>
 </template>
 
 <script setup>
-import { mdiStar } from "@mdi/js";
+import { mdiStar, mdiPlay, mdiPause } from "@mdi/js";
 import { EvoVueCarousel } from "../../src/main";
 import SvgIcon from "vue3-icon";
 import HelloWorld from "./components/Hello.vue";

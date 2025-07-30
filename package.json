@@ -1,55 +1,56 @@
 {
-    "name": "evo-vue-carousel",
-    "version": "1.0.11",
-    "type": "module",
-    "license": "GPL-3.0-only",
-    "files": [
-        "dist"
-    ],
-    "exports": {
-        ".": {
-            "require": "./dist/evo-vue-carousel.js",
-            "import": "./dist/evo-vue-carousel.js"
-        },
-        "./tailwind": {
-            "require": "./dist/tailwind.js",
-            "import": "./dist/tailwind.js"
-        }
-    },
-    "scripts": {
-        "dev": "vite --host",
-        "build": "vite build && cp ./src/node/tailwind.js ./dist/tailwind.js",
-        "preview": "vite preview",
-        "demo": "pnpm --filter='./demo' run dev",
-        "demo:build": "pnpm --filter='./demo' run build",
-        "demo:preview": "pnpm --filter='./demo' run preview",
-        "prepublishOnly": "npm run build"
-    },
-    "dependencies": {
-        "@evomark/vue-forward-slots": "^6.2.0",
-        "@skirtle/vue-vnode-utils": "^0.2.0",
-        "@vueuse/core": "^12.5.0",
-        "lodash-es": "^4.17.21",
-        "vue3-icon": "^3.0.3"
-    },
-    "devDependencies": {
-        "@eslint/js": "^9.20.0",
-        "@vitejs/plugin-vue": "^5.2.1",
-        "eslint": "^9.20.0",
-        "eslint-config-prettier": "^10.0.1",
-        "eslint-plugin-jsdoc": "^50.6.3",
-        "eslint-plugin-vue": "^9.32.0",
-        "globals": "^15.14.0",
-        "prettier": "^3.5.0",
-        "tailwind-merge": "^2.6.0",
-        "tailwindcss": "^3.4.17",
-        "vite": "^6.1.0",
-        "vite-plugin-lib-inject-css": "^2.2.1",
-        "vue": "^3.5.13"
-    },
-    "peerDependencies": {
-        "tailwind-merge": "^2.5.2 || ^3.0.0",
-        "vue": "^3.4.38"
-    },
-    "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b"
+	"name": "evo-vue-carousel",
+	"version": "1.0.12",
+	"type": "module",
+	"license": "GPL-3.0-only",
+	"files": [
+		"dist"
+	],
+	"exports": {
+		".": {
+			"require": "./dist/evo-vue-carousel.js",
+			"import": "./dist/evo-vue-carousel.js"
+		},
+		"./tailwind": {
+			"require": "./dist/tailwind.js",
+			"import": "./dist/tailwind.js"
+		}
+	},
+	"scripts": {
+		"dev": "vite --host",
+		"build": "vite build && cp ./src/node/tailwind.js ./dist/tailwind.js",
+		"preview": "vite preview",
+		"demo": "pnpm --filter='./demo' run dev",
+		"demo:build": "pnpm --filter='./demo' run build",
+		"demo:preview": "pnpm --filter='./demo' run preview",
+		"prepublishOnly": "npm run build"
+	},
+	"dependencies": {
+		"@evomark/vue-forward-slots": "^6.2.2",
+		"@skirtle/vue-vnode-utils": "^0.2.0",
+		"@vueuse/core": "^13.6.0",
+		"lodash-es": "^4.17.21",
+		"vue3-icon": "^3.0.3"
+	},
+	"devDependencies": {
+		"@eslint/js": "^9.32.0",
+		"@vitejs/plugin-vue": "^6.0.1",
+		"eslint": "^9.32.0",
+		"eslint-config-prettier": "^10.1.8",
+		"eslint-plugin-jsdoc": "^52.0.1",
+		"eslint-plugin-vue": "^10.3.0",
+		"globals": "^16.3.0",
+		"prettier": "^3.6.2",
+		"tailwind-merge": "^2.6.0",
+		"tailwindcss": "^3.4.17",
+		"vite": "npm:rolldown-vite@^7.0.12",
+		"vite-plugin-lib-inject-css": "^2.2.2",
+		"vue": "^3.5.18",
+		"vue-eslint-parser": "^10.2.0"
+	},
+	"peerDependencies": {
+		"tailwind-merge": "^2.5.2 || ^3.0.0",
+		"vue": "^3.4.38"
+	},
+	"packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
 }

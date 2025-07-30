@@ -38,8 +38,13 @@ function processConfigValues(value, key) {
 			if (!value || value === "false" || value === "0") return false;
 			else if (value === true || value === "true") return 5000;
 			else return +value;
-		case "wrap":
 		case "pauseOnHover":
+			// We need to disable this option is manual controls are used
+			if (this.manualControls) value = false;
+			else if (value === "true") value = true;
+			else if (value === "false") value = false;
+			return isBoolean(value) ? value : !!value;
+		case "wrap":
 		case "hideNavigation":
 		case "hidePagination":
 			if (value === "true") value = true;
@@ -62,9 +67,10 @@ function processConfigValues(value, key) {
 /**
  * Creates a computed config object merging the defaults with the current breakpoint
  * @param { import("vue").ComponentPropsOptions } props The base component props object
+ * @param { boolean } manualControls The user has chosen to use the 'controls' slot for manual control of autoplay
  * @returns { import("vue").ComputedRef<ResponsiveConfig> } The computed config object
  */
-export const useResponsiveConfig = (props) => {
+export const useResponsiveConfig = (props, manualControls = false) => {
 	const { width: screenWidth } = useWindowSize();
 	const defaultConfig = computed(() => pick(props, responsiveProperties));
 	const sortedResponsiveConfigs = computed(() =>
@@ -83,7 +89,7 @@ export const useResponsiveConfig = (props) => {
 	});
 
 	return computed(() => {
-		const mergedConfig = Object.assign({}, defaultConfig.value, currentResponsiveConfig.value);
+		const mergedConfig = Object.assign({ manualControls }, defaultConfig.value, currentResponsiveConfig.value);
 		return mapValues(mergedConfig, processConfigValues.bind(mergedConfig));
 	});
 };

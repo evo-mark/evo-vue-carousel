@@ -9,7 +9,7 @@
 	>
 		<Transition
 			mode="in-out"
-			enter-active-class="transition-all duration-1000 absolute inset-0"
+			enter-active-class="transition-all duration-1000 motion-reduce:transition-none motion-reduce:duration-0 absolute inset-0"
 			leave-active-class="transition-none absolute hidden"
 			enter-from-class="opacity-0"
 			@before-enter="setIsNavigating(true)"

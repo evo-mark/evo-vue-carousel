@@ -10,10 +10,10 @@ const isHoveredKey = Symbol.for("evo-vue-carousel__is-hovered");
 const isNavigatingKey = Symbol.for("evo-vue-carousel__is-navigating");
 const autoplayFnKey = Symbol.for("evo-vue-carousel__autoplay-fn");
 
-export const useCarouselHost = (props, slideCount, sliderRef) => {
+export const useCarouselHost = (props, slideCount, sliderRef, manualControls = false) => {
 	const isInit = ref(false);
 	const isNavigating = ref(false);
-	const config = useResponsiveConfig(props);
+	const config = useResponsiveConfig(props, manualControls);
 	const currentIndex = ref(0);
 	const isHovered = useElementHover(sliderRef, {
 		delayEnter: +props.hoverDelayEnter,

@@ -54,11 +54,14 @@
 				:disable-on-navigation="props.disableOnNavigation"
 			/>
 		</ForwardSlots>
+		<ForwardSlots :slots="$slots" only="controls">
+			<AutoplayControls />
+		</ForwardSlots>
 	</div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, useSlots } from "vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import {
 	EvoVueCarouselPagination,
@@ -66,6 +69,7 @@ import {
 	EvoVueCarouselViewportSlider,
 	EvoVueCarouselViewportGallery,
 } from "../main.js";
+import AutoplayControls from "./controls/Autoplay.vue";
 import { EVO_VUE_CAROUSEL_MODE } from "../utils/constants.js";
 import { useRegisterSlide } from "../composables/useRegisterSlide.js";
 import { useCarouselHost } from "../composables/useCarousel.js";
@@ -232,6 +236,7 @@ const props = defineProps({
 });
 
 const sliderRef = ref(null);
+const slots = useSlots();
 const { slideCount, isInit: sliderIsInit } = useRegisterSlide();
-const { config, isHovered } = useCarouselHost(props, slideCount, sliderRef);
+const { config, isHovered } = useCarouselHost(props, slideCount, sliderRef, !!slots.controls);
 </script>

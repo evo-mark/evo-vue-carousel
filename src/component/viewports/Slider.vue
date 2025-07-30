@@ -23,6 +23,8 @@ import { ref, computed, watch, h, normalizeClass } from "vue";
 import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide";
 
+const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 const FILTER_COMPONENTS = Object.freeze({
 	element: true,
 	component: true,
@@ -99,6 +101,9 @@ watch(currentIndex, (v) => {
 		offsetStart.value = offset.value;
 	}
 	offset.value = updateOffset(v);
+    if (prefersReducedMotion) {
+        onSlideTransitionEnd();
+    }
 });
 
 /* *********************************************
@@ -184,7 +189,7 @@ const SliderTrack = {
 							"is-navigating": isNavigating.value,
 							"autoplay-active": autoplayIsActive.value,
 						},
-						disableTransition.value ? "transition-none" : "transition-all",
+						disableTransition.value ? "transition-none" : "transition-all motion-reduce:transition-none",
 						config.value.slideTransitionTimingClass,
 					]),
 					style: trackStyle.value,
