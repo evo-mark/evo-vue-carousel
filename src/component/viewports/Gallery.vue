@@ -51,6 +51,8 @@ const { height: galleryHeight } = useElementSize(galleryRef);
  * AUTOPLAY
  ********************************************************* */
 watch(isHovered, (v) => {
+	if (config.value.pauseOnHover !== true) return;
+
 	if (v) pauseAutoplay();
 	else resumeAutoplay();
 });

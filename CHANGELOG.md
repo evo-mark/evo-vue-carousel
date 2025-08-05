@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.0.14
+
+- **BugFix**: `pauseOnHover` not applied to Gallery viewport
+- **Chore**: Updated dependencies
+
 ## v1.0.13
 
 - **Improvement**: Added support for `prefers-reduced-motion` to disable transitions
