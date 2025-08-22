@@ -1,5 +1,10 @@
 <template>
-	<div class="evo-vue-carousel__pagination" :class="props.backgroundClass">
+	<div
+		class="evo-vue-carousel__pagination"
+		:class="props.backgroundClass"
+		role="group"
+		aria-label="Slide Pagination Controls"
+	>
 		<slot name="pagination" :page="pages" :is-current-page="isCurrentPage" :is-navigating="isNavigating">
 			<template v-for="(page, index) in pages" :key="page">
 				<ForwardSlots :slots="$slots" only="pagination-item">
@@ -12,6 +17,7 @@
 						:page-index="index"
 						:is-active="isCurrentPage(index)"
 						:disabled="props.disableOnNavigation && isNavigating"
+						:aria-disabled="(props.disableOnNavigation && isNavigating) || isCurrentPage(index)"
 					/>
 				</ForwardSlots>
 			</template>

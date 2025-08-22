@@ -39,6 +39,8 @@ export default {
 				"div",
 				{
 					ref: slideRef,
+					role: "group",
+					"aria-roledescription": "Slide",
 				},
 				slots.default(),
 			);

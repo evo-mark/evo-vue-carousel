@@ -1,6 +1,9 @@
 <template>
 	<div
 		ref="sliderRef"
+		role="region"
+		aria-roledescription="carousel"
+		:aria-label="props.label"
 		class="evo-vue-carousel relative max-h-full"
 		:class="{
 			'is-hovered': isHovered,
@@ -232,6 +235,13 @@ const props = defineProps({
 	hoverDelayLeave: {
 		type: [String, Number],
 		default: 0,
+	},
+	/**
+	 * @namespace Accessibility
+	 */
+	label: {
+		type: String,
+		default: "Image Carousel",
 	},
 });
 

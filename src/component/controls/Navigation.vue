@@ -1,11 +1,13 @@
 <template>
 	<slot name="navigation" :on-prev="onPrev" :on-next="onNext" :current-index="currentIndex" :config="config">
-		<div class="evo-vue-carousel__navigation" v-bind="$attrs">
+		<div class="evo-vue-carousel__navigation" role="group" aria-label="Slide Navigation Controls" v-bind="$attrs">
 			<slot name="navigation-prev" :on-click="onPrev" :current-index="currentIndex" :disabled="disablePrev">
 				<button
 					class="evo-vue-carousel__navigation-item evo-vue-carousel__navigation-prev"
 					:class="_prevClasses"
 					:disabled="disablePrev"
+					:aria-disabled="disablePrev"
+					aria-label="Previous Slide"
 					@click="onPrev"
 				>
 					<SvgIcon :path="leftIcon" viewBox="0 0 48 48" class="w-full h-full" />
@@ -16,6 +18,8 @@
 					class="evo-vue-carousel__navigation-item evo-vue-carousel__navigation-next"
 					:class="_nextClasses"
 					:disabled="disableNext"
+					:aria-disabled="disableNext"
+					aria-label="Next Slide"
 					@click="onNext"
 				>
 					<SvgIcon :path="rightIcon" viewBox="0 0 48 48" class="w-full h-full" />
