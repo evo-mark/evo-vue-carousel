@@ -4,9 +4,14 @@
     "dictionaryDefinitions": [],
     "dictionaries": [],
     "words": [
+        "autoplay",
+        "evomark",
         "rolldown",
         "skirtle"
     ],
-    "ignoreWords": [],
+    "ignoreWords": [
+        "vnode",
+        "vueuse"
+    ],
     "import": []
 }

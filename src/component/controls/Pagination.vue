@@ -27,7 +27,8 @@
 
 <script setup>
 import { computed, normalizeClass } from "vue";
-import { chunk, findLastIndex } from "lodash-es";
+import { chunk } from "es-toolkit";
+import { findLastIndex } from "es-toolkit/compat";
 import PaginationItem from "./PaginationItem.vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import { useCarouselClient } from "../../composables/useCarousel";

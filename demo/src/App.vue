@@ -36,7 +36,7 @@
 	<div class="container">
 		<EvoVueCarousel
 			wrap
-			:autoplay="2000"
+			:autoplay="5000"
 			per-page="1"
 			slide-by="1"
 			disable-on-navigation
@@ -82,9 +82,12 @@
 			</div>
 			<template #pagination="{ isNavigating }">
 				<span
-					:class="{
-						'text-red-600': isNavigating,
-					}"
+					:class="[
+						'transition-colors duration-1000',
+						{
+							'text-red-600': isNavigating,
+						},
+					]"
 					>Testing</span
 				>
 			</template>

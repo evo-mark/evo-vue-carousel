@@ -1,0 +1,7 @@
+@import "tailwindcss";
+@import "evo-vue-carousel/style";
+
+@utility container {
+	margin-inline: auto;
+	padding-inline: 2rem;
+}

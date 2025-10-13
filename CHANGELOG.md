@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v1.1.0
+
+- **Feature**: Add support for Tailwind v4 (`@import "evo-vue-carousel/style";`)
+- **Chore**: Updated dependencies
+- **Demo**: Updated to Tailwind v4
+
 ## v1.0.14
 
 - **BugFix**: `pauseOnHover` not applied to Gallery viewport

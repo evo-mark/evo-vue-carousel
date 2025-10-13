@@ -1,5 +1,5 @@
 import { useWindowSize } from "@vueuse/core";
-import { pick, mapValues, isBoolean } from "lodash-es";
+import { pick, mapValues, isBoolean } from "es-toolkit";
 import { computed } from "vue";
 
 const responsiveProperties = [

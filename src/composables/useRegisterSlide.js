@@ -1,5 +1,5 @@
 import { ref, computed, readonly, provide, inject } from "vue";
-import { debounce } from "lodash-es";
+import { debounce } from "es-toolkit";
 
 export const registerSlideKey = Symbol.for("evo-vue-carousel__register-slide");
 export const registerSlideClientKey = Symbol.for("evo-vue-carousel__register-slide-client");

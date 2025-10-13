@@ -26,7 +26,7 @@
 import { useElementSize } from "@vueuse/core";
 import ViewportSlide from "./Slide";
 import { ref, h, normalizeClass, Fragment, computed, watch } from "vue";
-import { slice, concat } from "lodash-es";
+import { slice, concat } from "es-toolkit/compat";
 import { useCarouselClient } from "../../composables/useCarousel";
 import { replaceChildren, COMPONENTS_AND_ELEMENTS } from "@skirtle/vue-vnode-utils";
 

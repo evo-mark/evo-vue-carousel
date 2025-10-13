@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { concat } from "lodash-es";
+import { concat } from "es-toolkit/compat";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
 import { useCarouselClient } from "../../composables/useCarousel";
 import { nextFrame } from "../../utils/animation";
@@ -23,7 +23,8 @@ import { ref, computed, watch, h, normalizeClass } from "vue";
 import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide";
 
-const prefersReducedMotion = typeof window !== "undefined" && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const prefersReducedMotion =
+	typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 const FILTER_COMPONENTS = Object.freeze({
 	element: true,
@@ -101,9 +102,9 @@ watch(currentIndex, (v) => {
 		offsetStart.value = offset.value;
 	}
 	offset.value = updateOffset(v);
-    if (prefersReducedMotion) {
-        onSlideTransitionEnd();
-    }
+	if (prefersReducedMotion) {
+		onSlideTransitionEnd();
+	}
 });
 
 /* *********************************************

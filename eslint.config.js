@@ -5,6 +5,9 @@ import js from "@eslint/js";
 import jsdoc from "eslint-plugin-jsdoc";
 
 export default [
+	{
+		ignores: ["dist/**", "demo/dist/**"],
+	},
 	js.configs.recommended,
 	jsdoc.configs["flat/recommended"],
 	...pluginVue.configs["flat/recommended"],
