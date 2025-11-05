@@ -2,7 +2,6 @@
 	<div
 		ref="viewportRef"
 		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider relative flex w-full h-full max-h-full overflow-hidden"
-		role="listbox"
 		:data-width="sliderWidth"
 		:data-height="sliderHeight"
 	>
@@ -163,11 +162,11 @@ const SliderTrack = {
 									"evo-vue-carousel__slide-suffix": position === "suffix",
 								},
 							]),
-							role: "option",
 							style: {
 								flexBasis: "var(--slide-width, 0px)",
 								marginRight: `${props.gap}px`,
 							},
+							ariaLabel: `Slide ${i}`,
 							key: `slide_${i}${keyAppend}`,
 							isClone: !!position,
 						},

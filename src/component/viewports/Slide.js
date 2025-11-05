@@ -40,7 +40,9 @@ export default {
 				{
 					ref: slideRef,
 					role: "group",
-					"aria-roledescription": "Slide",
+					"aria-roledescription": "slide",
+					"aria-hidden": props.isClone,
+					tabindex: props.isClone ? -1 : undefined
 				},
 				slots.default(),
 			);
