@@ -18,4 +18,8 @@ export default defineConfig({
 		postcss: {},
 	},
 	plugins: [vue(), libInjectCss()],
+	test: {
+		environment: "jsdom",
+		setupFiles: ["./tests/setup.js"],
+	},
 });
