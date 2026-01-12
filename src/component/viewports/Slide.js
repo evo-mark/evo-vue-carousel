@@ -39,10 +39,10 @@ export default {
 				"div",
 				{
 					ref: slideRef,
-					role: "group",
+					role: "listitem",
 					"aria-roledescription": "slide",
 					"aria-hidden": props.isClone,
-					tabindex: props.isClone ? -1 : undefined
+					tabindex: props.isClone ? -1 : undefined,
 				},
 				slots.default(),
 			);

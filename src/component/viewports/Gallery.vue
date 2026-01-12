@@ -102,7 +102,7 @@ const SliderTrack = {
 									hidden: visibleSlides.value.includes(i) === false,
 								},
 							]),
-							role: "option",
+							role: "listitem",
 						},
 						{
 							default: () => [vnode],
@@ -122,6 +122,7 @@ const SliderTrack = {
 			return h(
 				"div",
 				{
+					role: "list",
 					class: normalizeClass(["flex h-full overflow-hidden"]),
 				},
 				viewport,

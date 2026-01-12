@@ -192,6 +192,7 @@ const SliderTrack = {
 						disableTransition.value ? "transition-none" : "transition-all motion-reduce:transition-none",
 						config.value.slideTransitionTimingClass,
 					]),
+					role: "list",
 					style: trackStyle.value,
 					onTransitionstart: onSlideTransitionStart,
 					onTransitionend: onSlideTransitionEnd,
