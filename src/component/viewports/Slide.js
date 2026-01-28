@@ -8,6 +8,10 @@ export default {
 			type: Boolean,
 			default: false,
 		},
+		isVisible: {
+			type: Boolean,
+			default: false,
+		},
 	},
 	setup(props, { slots }) {
 		const slideRef = ref(null);
@@ -41,8 +45,8 @@ export default {
 					ref: slideRef,
 					role: "listitem",
 					"aria-roledescription": "slide",
-					"aria-hidden": props.isClone,
-					tabindex: props.isClone ? -1 : undefined,
+					"aria-hidden": !props.isVisible,
+					tabindex: !props.isVisible ? -1 : undefined,
 				},
 				slots.default(),
 			);

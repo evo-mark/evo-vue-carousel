@@ -37,13 +37,13 @@
 		<EvoVueCarousel
 			wrap
 			:autoplay="5000"
-			per-page="1"
+			per-page="4"
 			slide-by="1"
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>
-			<div v-for="slide in slides" :key="slide" class="relative w-full h-full">
-				<img :src="slide" class="w-full h-full object-cover" />
+			<div v-for="(slide, index) in slides" :key="slide" class="relative w-full h-full">
+				<img :src="slide" class="w-full h-full object-cover" loading="lazy" />
 				<div
 					class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-yellow-500 flex flex-col bg-zinc-900 p-4 rounded-xl"
 				>
@@ -53,7 +53,7 @@
 							<SvgIcon v-for="n in 4" :key="n" :path="mdiStar" size="48" />
 						</div>
 					</div>
-					Testing
+					{{ index + 1 }} of {{ slides.length }}
 				</div>
 			</div>
 			<template #controls="{ play, pause, playing }">
@@ -127,5 +127,7 @@ const slides = [
 	"https://picsum.photos/seed/the-end-is-the-beginning/1920/1080",
 	"https://picsum.photos/seed/tannhaus/1920/1080",
 	"https://picsum.photos/seed/inside-the-knot/1920/1080",
+	"https://picsum.photos/seed/mikkel/1920/1080",
+	"https://picsum.photos/seed/jonas/1920/1080",
 ];
 </script>

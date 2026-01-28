@@ -21,6 +21,7 @@ import { useElementSize } from "@vueuse/core";
 import { ref, computed, watch, h, normalizeClass } from "vue";
 import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide";
+import { range } from "es-toolkit";
 
 const prefersReducedMotion =
 	typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -62,6 +63,13 @@ const calculateTransitionDuration = (distance, speed) => {
 	return (distance / speed) * 100;
 };
 
+const offset = ref(0);
+const offsetStart = ref(0);
+const offsetSlides = ref(0);
+const visibleSlides = computed(() => {
+	return range(offsetSlides.value + 1, offsetSlides.value + 1 + config.value.perPage);
+});
+
 const trackStyle = computed(() => ({
 	transform: `translate3d(${offset.value}px, 0, 0)`,
 	transitionDuration: `${calculateTransitionDuration(offsetDistance.value, config.value.transitionSpeed)}ms`,
@@ -70,8 +78,8 @@ const trackStyle = computed(() => ({
 const updateOffset = (index) => {
 	const slideWidth = parseFloat(defaultSlideWidth.value);
 
-	const offsetSlides = config.value.wrap ? props.totalSlides + index : index;
-	const centre = (slideWidth + config.value.gap) * offsetSlides;
+	offsetSlides.value = config.value.wrap ? props.totalSlides + index : index;
+	const centre = (slideWidth + config.value.gap) * offsetSlides.value;
 	return centre * -1;
 };
 
@@ -81,8 +89,6 @@ const defaultSlideWidth = computed(() => {
 	const totalGap = config.value.gap > 0 ? config.value.gap * (config.value.perPage - 1) : 0;
 	return (sliderWidth.value - totalGap) / config.value.perPage + "px";
 });
-const offset = ref(0);
-const offsetStart = ref(0);
 
 watch(
 	() => props.isInit,
@@ -135,6 +141,10 @@ watch(isHovered, (v) => {
 /* *********************************************
  * TRACK
  * ******************************************* */
+const getAbsolutePosition = (index, position) => {
+	const offset = position === "prefix" ? 0 : position === "suffix" ? props.totalSlides * 2 : props.totalSlides;
+	return offset + index;
+};
 const SliderTrack = {
 	props: {
 		gap: {
@@ -151,6 +161,8 @@ const SliderTrack = {
 				extractSlot(),
 				(vnode) => {
 					i++;
+					const absolutePosition = getAbsolutePosition(i, position);
+
 					return h(
 						ViewportSlide,
 						{
@@ -169,6 +181,7 @@ const SliderTrack = {
 							ariaLabel: `Slide ${i}`,
 							key: `slide_${i}${keyAppend}`,
 							isClone: !!position,
+							isVisible: visibleSlides.value.includes(absolutePosition),
 						},
 						{
 							default: () => [vnode],
