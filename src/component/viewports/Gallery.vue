@@ -103,6 +103,8 @@ const SliderTrack = {
 								},
 							]),
 							role: "listitem",
+							isVisible: visibleSlides.value.includes(i) === false,
+							isClone: false,
 						},
 						{
 							default: () => [vnode],

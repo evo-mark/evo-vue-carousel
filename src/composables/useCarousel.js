@@ -46,6 +46,7 @@ export const useCarouselHost = (props, slideCount, sliderRef, manualControls = f
 		resume: resumeAutoplay,
 		isActive: autoplayIsActive,
 	} = useIntervalFn(() => {
+		if (isNavigating.value) return;
 		setCurrentIndex(currentIndex.value + config.value.slideBy);
 	}, autoplayInterval);
 
