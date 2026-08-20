@@ -1,7 +1,7 @@
-import { provide, inject, ref, readonly, computed, watch, nextTick } from "vue";
-import { useResponsiveConfig } from "./useResponsiveConfig";
-import { checkPosition } from "../utils/checkPosition";
 import { useElementHover, useIntervalFn } from "@vueuse/core";
+import { computed, inject, nextTick, provide, readonly, ref, watch } from "vue";
+import { checkPosition } from "../utils/checkPosition";
+import { useResponsiveConfig } from "./useResponsiveConfig";
 
 const configKey = Symbol.for("evo-vue-carousel__config");
 const slideCountKey = Symbol.for("evo-vue-carousel__slide-count");
@@ -75,7 +75,7 @@ export const useCarouselClient = () => {
 	const slideCount = inject(slideCountKey);
 	const isHovered = inject(isHoveredKey);
 	const isNavigating = inject(isNavigatingKey);
-	const autoplaysFns = inject(autoplayFnKey);
+	const autoplayFns = inject(autoplayFnKey);
 
 	const setCurrentIndex = (newIndex) => {
 		currentIndex.value = checkPosition(newIndex, slideCount.value, config);
@@ -92,6 +92,6 @@ export const useCarouselClient = () => {
 		isHovered,
 		isNavigating: readonly(isNavigating),
 		setIsNavigating,
-		...autoplaysFns,
+		...autoplayFns,
 	};
 };

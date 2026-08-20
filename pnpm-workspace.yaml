@@ -1,5 +1,10 @@
 packages:
   - demo
 
+allowBuilds:
+  '@skirtle/vue-vnode-utils': true
+  '@tailwindcss/oxide': true
+  esbuild: true
+
 onlyBuiltDependencies:
   - '@tailwindcss/oxide'

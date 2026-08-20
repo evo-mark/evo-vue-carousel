@@ -13,20 +13,20 @@
 		"evo-vue-carousel": "link:.."
 	},
 	"devDependencies": {
-		"@eslint/js": "^9.37.0",
-		"@tailwindcss/vite": "^4.1.14",
-		"@vitejs/plugin-vue": "^6.0.1",
-		"eslint": "^9.37.0",
+		"@eslint/js": "^10.0.1",
+		"@tailwindcss/vite": "^4.3.3",
+		"@vitejs/plugin-vue": "^6.0.8",
+		"eslint": "^10.8.1",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-vue": "^10.5.0",
-		"globals": "^16.4.0",
-		"prettier": "^3.6.2",
-		"tailwindcss": "^4.1.14",
-		"vite": "npm:rolldown-vite@^7.1.16",
-		"vue": "^3.5.22"
+		"eslint-plugin-vue": "^10.10.0",
+		"globals": "^17.11.0",
+		"prettier": "^3.9.6",
+		"tailwindcss": "^4.3.3",
+		"vite": "^8.2.1",
+		"vue": "^3.5.41"
 	},
 	"peerDependencies": {
 		"vue": "^3.4.38"
 	},
-	"packageManager": "pnpm@10.13.1+sha512.37ebf1a5c7a30d5fabe0c5df44ee8da4c965ca0c5af3dbab28c3a1681b70a256218d05c81c9c0dcf767ef6b8551eb5b960042b9ed4300c59242336377e01cfad"
+	"packageManager": "pnpm@11.22.0+sha512.1ff870c4c6133dfd88fb2afc46dd13d47f09c9794b438c6fdb47ca98caf3bc16381ee0be93a091b8e3824cf01f889f46d7d9e20910fb0be1ab0fb5baa80dd621"
 }

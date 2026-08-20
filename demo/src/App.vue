@@ -70,7 +70,7 @@
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
 			:wrap="false"
-			mode="gallery"
+			mode="slider"
 			per-page="1"
 			gap="40"
 			pause-on-hover
@@ -80,25 +80,14 @@
 			<div v-for="slide in slides" :key="slide">
 				<img :src="slide" />
 			</div>
-			<template #pagination="{ isNavigating }">
-				<span
-					:class="[
-						'transition-colors duration-1000',
-						{
-							'text-red-600': isNavigating,
-						},
-					]"
-					>Testing</span
-				>
-			</template>
 		</EvoVueCarousel>
 	</div>
 </template>
 
 <script setup>
-import { mdiStar, mdiPlay, mdiPause } from "@mdi/js";
-import { EvoVueCarousel } from "../../src/main";
+import { mdiPause, mdiPlay, mdiStar } from "@mdi/js";
 import SvgIcon from "vue3-icon";
+import { EvoVueCarousel } from "../../src/main";
 import HelloWorld from "./components/Hello.vue";
 
 /* const responsiveConfig = {
