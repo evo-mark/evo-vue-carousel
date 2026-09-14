@@ -14,11 +14,17 @@ export const useCarouselHost = (props, slideCount, sliderRef, manualControls = f
 	const isInit = ref(false);
 	const isNavigating = ref(false);
 	const config = useResponsiveConfig(props, manualControls);
-	const currentIndex = ref(0);
+	const currentIndex = ref(+props.initialIndex);
 	const isHovered = useElementHover(sliderRef, {
 		delayEnter: +props.hoverDelayEnter,
 		delayLeave: +props.hoverDelayLeave,
 	});
+
+	watch(() => props.initialIndex, (idx) => {
+		if (isNavigating.value === false) {
+			currentIndex.value = +idx;
+		}
+	})
 
 	const stop = watch(
 		slideCount,
