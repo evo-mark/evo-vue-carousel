@@ -35,7 +35,7 @@
 	</header>
 	<div class="container">
 		<EvoVueCarousel
-			:initial-index="2"
+			v-model="sliderIndex"
 			per-page="4"
 			slide-by="1"
 			disable-on-navigation
@@ -66,6 +66,12 @@
 				</div>
 			</template>
 		</EvoVueCarousel>
+		<button
+			class="bg-teal-600 text-white px-4 py-2 rounded-lg mt-2 active:bg-teal-500 transition-colors duration-150 ease-in-out"
+			@click="onRandomIndex"
+		>
+			Random Index
+		</button>
 		<h2 class="my-4">Gallery Mode</h2>
 		<EvoVueCarousel
 			:wrap="false"
@@ -86,6 +92,7 @@
 <script setup>
 import { mdiPause, mdiPlay, mdiStar } from "@mdi/js";
 import SvgIcon from "vue3-icon";
+import { ref } from "vue";
 import { EvoVueCarousel } from "../../src/main";
 import HelloWorld from "./components/Hello.vue";
 
@@ -108,6 +115,11 @@ import HelloWorld from "./components/Hello.vue";
 		wrap: true,
 	},
 }; */
+
+const sliderIndex = ref(2);
+const onRandomIndex = () => {
+	sliderIndex.value = Math.floor(Math.random() * slides.length);
+};
 
 const slides = [
 	"https://picsum.photos/seed/sic-mundus-creatus-est/1920/1080",

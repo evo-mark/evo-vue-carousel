@@ -22,6 +22,7 @@ export const checkPosition = (newIndex, totalSlides, config) => {
 	}
 
 	if (shouldWrap === false && newIndex <= 0) return 0;
-	else if (shouldWrap === false && newIndex >= totalSlides) return finalPage;
-	else return newIndex;
+	else if (shouldWrap === false && newIndex >= finalPage) {
+		return finalPage;
+	} else return newIndex;
 };

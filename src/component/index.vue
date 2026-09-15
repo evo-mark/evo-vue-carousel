@@ -77,6 +77,11 @@ import { EVO_VUE_CAROUSEL_MODE } from "../utils/constants.js";
 import { useRegisterSlide } from "../composables/useRegisterSlide.js";
 import { useCarouselHost } from "../composables/useCarousel.js";
 
+const modelValue = defineModel({
+	type: Number,
+	default: 0,
+});
+
 const props = defineProps({
 	autoplay: {
 		type: [Boolean, Number],
@@ -110,10 +115,6 @@ const props = defineProps({
 		type: String,
 		default: EVO_VUE_CAROUSEL_MODE.SLIDER,
 		validator: (v) => Object.values(EVO_VUE_CAROUSEL_MODE).includes(v),
-	},
-	initialIndex: {
-		type: [String, Number],
-		default: 0,
 	},
 	gap: {
 		type: [String, Number],
@@ -248,5 +249,5 @@ const props = defineProps({
 const sliderRef = ref(null);
 const slots = useSlots();
 const { slideCount, isInit: sliderIsInit } = useRegisterSlide();
-const { config, isHovered } = useCarouselHost(props, slideCount, sliderRef, !!slots.controls);
+const { config, isHovered } = useCarouselHost(modelValue, props, slideCount, sliderRef, !!slots.controls);
 </script>

@@ -10,34 +10,21 @@ const isHoveredKey = Symbol.for("evo-vue-carousel__is-hovered");
 const isNavigatingKey = Symbol.for("evo-vue-carousel__is-navigating");
 const autoplayFnKey = Symbol.for("evo-vue-carousel__autoplay-fn");
 
-export const useCarouselHost = (props, slideCount, sliderRef, manualControls = false) => {
+export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manualControls = false) => {
 	const isInit = ref(false);
 	const isNavigating = ref(false);
 	const config = useResponsiveConfig(props, manualControls);
-	const currentIndex = ref(0);
 	const isHovered = useElementHover(sliderRef, {
 		delayEnter: +props.hoverDelayEnter,
 		delayLeave: +props.hoverDelayLeave,
 	});
 
-	watch(
-		() => props.initialIndex,
-		(idx) => {
-			if (isNavigating.value === false && idx !== 0) {
-				currentIndex.value = +idx;
-			}
-		},
-		{
-			immediate: true,
-		},
-	);
-
 	const stop = watch(
 		slideCount,
 		async (c) => {
 			if (c > 0) {
-				currentIndex.value = checkPosition(+props.initialIndex, c, config);
-				if (currentIndex.value > c) currentIndex.value = c - 1;
+				modelValue.value = checkPosition(modelValue.value, c, config);
+				if (modelValue.value > c) modelValue.value = c - 1;
 				isInit.value = true;
 				await nextTick();
 				stop();
@@ -48,9 +35,19 @@ export const useCarouselHost = (props, slideCount, sliderRef, manualControls = f
 		},
 	);
 
+	watch(
+		modelValue,
+		(v) => {
+			modelValue.value = checkPosition(v, slideCount.value, config);
+		},
+		{
+			flush: "pre",
+		},
+	);
+
 	const autoplayInterval = computed(() => config.value.autoplay ?? 0);
 	const setCurrentIndex = (newIndex) => {
-		currentIndex.value = checkPosition(newIndex, slideCount.value, config);
+		modelValue.value = checkPosition(newIndex, slideCount.value, config);
 	};
 
 	const {
@@ -59,12 +56,12 @@ export const useCarouselHost = (props, slideCount, sliderRef, manualControls = f
 		isActive: autoplayIsActive,
 	} = useIntervalFn(() => {
 		if (isNavigating.value) return;
-		setCurrentIndex(currentIndex.value + config.value.slideBy);
+		setCurrentIndex(modelValue.value + config.value.slideBy);
 	}, autoplayInterval);
 
 	provide(configKey, config);
 	provide(slideCountKey, readonly(slideCount));
-	provide(currentIndexKey, currentIndex);
+	provide(currentIndexKey, modelValue);
 	provide(isHoveredKey, isHovered);
 	provide(isNavigatingKey, isNavigating);
 	provide(autoplayFnKey, {
@@ -75,7 +72,7 @@ export const useCarouselHost = (props, slideCount, sliderRef, manualControls = f
 
 	return {
 		config,
-		currentIndex: readonly(currentIndex),
+		currentIndex: readonly(modelValue),
 		isHovered,
 		isInit,
 	};
