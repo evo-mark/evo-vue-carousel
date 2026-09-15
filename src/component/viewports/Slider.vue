@@ -133,10 +133,16 @@ watch(
  * TRANSITIONS
  * ******************************************* */
 
-const onSlideTransitionStart = () => {
+const onSlideTransitionStart = (ev) => {
+	if (ev.target.classList.contains("evo-vue-carousel__viewport-track") === false) {
+		return;
+	}
 	setIsNavigating(true);
 };
-const onSlideTransitionEnd = async () => {
+const onSlideTransitionEnd = async (ev) => {
+	if (ev.target.classList.contains("evo-vue-carousel__viewport-track") === false) {
+		return;
+	}
 	disableTransition.value = true;
 	await nextFrame();
 
