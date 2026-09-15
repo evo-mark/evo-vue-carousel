@@ -10,6 +10,7 @@ const responsiveProperties = [
 	"gap",
 	"slideBy",
 	"transitionSpeed",
+	"transitionDuration",
 	"pauseOnHover",
 	"slideTransitionTimingClass",
 	"hideNavigation",

@@ -36,8 +36,10 @@
 	<div class="container">
 		<EvoVueCarousel
 			v-model="sliderIndex"
-			per-page="4"
+			per-page="1"
 			slide-by="1"
+			:transition-duration="500"
+			slide-transition-timing-class="ease-in-out"
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
 		>

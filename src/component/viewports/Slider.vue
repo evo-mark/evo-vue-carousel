@@ -23,6 +23,10 @@ import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide";
 import { range } from "es-toolkit";
 
+defineOptions({
+	name: "EvoVueCarouselSlider",
+});
+
 const prefersReducedMotion =
 	typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -60,7 +64,8 @@ const {
 const disableTransition = ref(true);
 
 const calculateTransitionDuration = (distance, speed) => {
-	return (distance / speed) * 100;
+	if (config.value.transitionDuration) return config.value.transitionDuration;
+	else return (distance / speed) * 100;
 };
 
 const offset = ref(0);
@@ -98,6 +103,9 @@ watch(
 			await nextFrame(2);
 			disableTransition.value = false;
 		}
+	},
+	{
+		immediate: true,
 	},
 );
 const offsetDistance = computed(() => Math.abs(offset.value - offsetStart.value));

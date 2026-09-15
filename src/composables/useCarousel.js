@@ -20,6 +20,7 @@ export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manual
 		delayLeave: +props.hoverDelayLeave,
 	});
 
+	/** Called once when slides are first loaded */
 	const stop = watch(
 		slideCount,
 		async (c) => {

@@ -3,6 +3,7 @@ import { useElementSize } from "@vueuse/core";
 import { useRegisterSlideClient } from "../../composables/useRegisterSlide";
 
 export default {
+	name: "EvoVueCarouselSlide",
 	props: {
 		isClone: {
 			type: Boolean,

@@ -77,6 +77,10 @@ import { EVO_VUE_CAROUSEL_MODE } from "../utils/constants.js";
 import { useRegisterSlide } from "../composables/useRegisterSlide.js";
 import { useCarouselHost } from "../composables/useCarousel.js";
 
+defineOptions({
+	name: "EvoVueCarousel",
+});
+
 const modelValue = defineModel({
 	type: Number,
 	default: 0,
@@ -243,6 +247,10 @@ const props = defineProps({
 	label: {
 		type: String,
 		default: "Image Carousel",
+	},
+	transitionDuration: {
+		type: Boolean,
+		default: false,
 	},
 });
 
