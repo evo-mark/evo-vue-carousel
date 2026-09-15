@@ -35,8 +35,7 @@
 	</header>
 	<div class="container">
 		<EvoVueCarousel
-			wrap
-			:autoplay="5000"
+			:initial-index="2"
 			per-page="4"
 			slide-by="1"
 			disable-on-navigation

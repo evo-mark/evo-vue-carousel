@@ -15,15 +15,15 @@
 	"devDependencies": {
 		"@eslint/js": "^10.0.1",
 		"@tailwindcss/vite": "^4.3.3",
-		"@vitejs/plugin-vue": "^6.0.8",
-		"eslint": "^10.8.1",
+		"@vitejs/plugin-vue": "^6.0.9",
+		"eslint": "^10.10.0",
 		"eslint-config-prettier": "^10.1.8",
-		"eslint-plugin-vue": "^10.10.0",
-		"globals": "^17.11.0",
+		"eslint-plugin-vue": "^10.11.0",
+		"globals": "^17.12.0",
 		"prettier": "^3.9.6",
 		"tailwindcss": "^4.3.3",
-		"vite": "^8.2.1",
-		"vue": "^3.5.41"
+		"vite": "^8.3.0",
+		"vue": "^3.5.42"
 	},
 	"peerDependencies": {
 		"vue": "^3.4.38"
