@@ -11,6 +11,7 @@ const isNavigatingKey = Symbol.for("evo-vue-carousel__is-navigating");
 const autoplayFnKey = Symbol.for("evo-vue-carousel__autoplay-fn");
 
 export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manualControls = false) => {
+	/** Whether the slider has any slides loaded */
 	const isInit = ref(false);
 	const isNavigating = ref(false);
 	const config = useResponsiveConfig(props, manualControls);
@@ -24,7 +25,6 @@ export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manual
 		async (c) => {
 			if (c > 0) {
 				modelValue.value = checkPosition(modelValue.value, c, config);
-				if (modelValue.value > c) modelValue.value = c - 1;
 				isInit.value = true;
 				await nextTick();
 				stop();
@@ -38,7 +38,7 @@ export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manual
 	watch(
 		modelValue,
 		(v) => {
-			modelValue.value = checkPosition(v, slideCount.value, config);
+			setCurrentIndex(v);
 		},
 		{
 			flush: "pre",

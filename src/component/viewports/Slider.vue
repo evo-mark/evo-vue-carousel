@@ -105,6 +105,9 @@ const offsetDistance = computed(() => Math.abs(offset.value - offsetStart.value)
 watch(
 	currentIndex,
 	(v) => {
+		if (!props.isInit) {
+			return;
+		}
 		if (isNavigating.value === false) {
 			offsetStart.value = offset.value;
 		}
