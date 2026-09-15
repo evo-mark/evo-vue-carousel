@@ -102,15 +102,21 @@ watch(
 );
 const offsetDistance = computed(() => Math.abs(offset.value - offsetStart.value));
 
-watch(currentIndex, (v) => {
-	if (isNavigating.value === false) {
-		offsetStart.value = offset.value;
-	}
-	offset.value = updateOffset(v);
-	if (prefersReducedMotion) {
-		onSlideTransitionEnd();
-	}
-});
+watch(
+	currentIndex,
+	(v) => {
+		if (isNavigating.value === false) {
+			offsetStart.value = offset.value;
+		}
+		offset.value = updateOffset(v);
+		if (prefersReducedMotion) {
+			onSlideTransitionEnd();
+		}
+	},
+	{
+		immediate: true,
+	},
+);
 
 /* *********************************************
  * TRANSITIONS
