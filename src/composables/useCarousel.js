@@ -76,6 +76,7 @@ export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manual
 		currentIndex: readonly(modelValue),
 		isHovered,
 		isInit,
+		isNavigating,
 	};
 };
 

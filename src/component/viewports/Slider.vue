@@ -8,6 +8,28 @@
 		<ForwardSlots :slots="$slots" only="default">
 			<SliderTrack :gap="config.gap" />
 		</ForwardSlots>
+		<Teleport v-if="props.developer" to="#dev-stats" defer>
+			<tr>
+				<td>Offset:</td>
+				<td>{{ offset }}</td>
+			</tr>
+			<tr>
+				<td>Offset Start:</td>
+				<td>{{ offsetStart }}</td>
+			</tr>
+			<tr>
+				<td>Offset Slides:</td>
+				<td>{{ offsetSlides }}</td>
+			</tr>
+			<tr>
+				<td>Visible Slides:</td>
+				<td>{{ visibleSlides }}</td>
+			</tr>
+			<tr>
+				<td>Is Hovered:</td>
+				<td>{{ isHovered }}</td>
+			</tr>
+		</Teleport>
 	</div>
 </template>
 
@@ -44,6 +66,10 @@ const props = defineProps({
 		default: 0,
 	},
 	isInit: {
+		type: Boolean,
+		default: false,
+	},
+	developer: {
 		type: Boolean,
 		default: false,
 	},

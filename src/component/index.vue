@@ -15,12 +15,14 @@
 					v-if="config.mode === 'gallery'"
 					:total-slides="slideCount"
 					:is-init="sliderIsInit"
+					:developer="props.developer"
 				/>
 				<EvoVueCarouselViewportSlider
 					v-else
 					:class="props.viewportClass"
 					:total-slides="slideCount"
 					:is-init="sliderIsInit"
+					:developer="props.developer"
 				/>
 			</ForwardSlots>
 			<div v-if="$slots.overlay" class="evo-vue-carousel__overlay absolute inset-0">
@@ -60,6 +62,28 @@
 		<ForwardSlots :slots="$slots" only="controls">
 			<AutoplayControls />
 		</ForwardSlots>
+		<div v-if="props.developer" class="px-4 pt-2 pb-8">
+			<table>
+				<tbody id="dev-stats">
+					<tr>
+						<td>Current Index:</td>
+						<td>{{ currentIndex }}</td>
+					</tr>
+					<tr>
+						<td>Is Init:</td>
+						<td>{{ isInit }}</td>
+					</tr>
+					<tr>
+						<td>Is Navigating:</td>
+						<td>{{ isNavigating }}</td>
+					</tr>
+					<tr>
+						<td>Slide Count:</td>
+						<td>{{ slideCount }}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </template>
 
@@ -252,10 +276,20 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	developer: {
+		type: Boolean,
+		default: false,
+	},
 });
 
 const sliderRef = ref(null);
 const slots = useSlots();
 const { slideCount, isInit: sliderIsInit } = useRegisterSlide();
-const { config, isHovered } = useCarouselHost(modelValue, props, slideCount, sliderRef, !!slots.controls);
+const { config, isHovered, isInit, isNavigating, currentIndex } = useCarouselHost(
+	modelValue,
+	props,
+	slideCount,
+	sliderRef,
+	!!slots.controls,
+);
 </script>
