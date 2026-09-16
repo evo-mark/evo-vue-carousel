@@ -25,6 +25,9 @@ export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manual
 		slideCount,
 		async (c) => {
 			if (c > 0) {
+				if (props.developer) {
+					console.log("[useCarousel]: slideCount watch callback called");
+				}
 				modelValue.value = checkPosition(modelValue.value, c, config);
 				isInit.value = true;
 				await nextTick();

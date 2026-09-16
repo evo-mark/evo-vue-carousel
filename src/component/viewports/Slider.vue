@@ -125,7 +125,13 @@ watch(
 	() => props.isInit,
 	async (v) => {
 		if (v) {
+			if (props.developer) {
+				console.log("[Slider.vue]: props.isInit watcher callback called with true");
+			}
 			offset.value = updateOffset(currentIndex.value);
+			if (props.developer) {
+				console.log("[Slider.vue]: props.isInit watch callback updated offset to " + offset.value);
+			}
 			await nextFrame(2);
 			disableTransition.value = false;
 		}
@@ -139,6 +145,14 @@ const offsetDistance = computed(() => Math.abs(offset.value - offsetStart.value)
 watch(
 	currentIndex,
 	(v) => {
+		if (props.developer) {
+			console.log("[Slider.vue]: currentIndex watch callback");
+			console.table({
+				isInit: props.isInit,
+				currentIndex: v,
+				isNavigating: isNavigating.value,
+			});
+		}
 		if (!props.isInit) {
 			return;
 		}
@@ -146,6 +160,9 @@ watch(
 			offsetStart.value = offset.value;
 		}
 		offset.value = updateOffset(v);
+		if (props.developer) {
+			console.log("[Slider.vue]: currentIndex watch callback updated offset to " + offset.value);
+		}
 		if (prefersReducedMotion) {
 			onSlideTransitionEnd();
 		}
@@ -163,12 +180,19 @@ const onSlideTransitionStart = (ev) => {
 	if (ev.target.classList.contains("evo-vue-carousel__viewport-track") === false) {
 		return;
 	}
+	if (props.developer) {
+		console.log("[Slider.vue]: onSlideTransitionStart called");
+	}
 	setIsNavigating(true);
 };
 const onSlideTransitionEnd = async (ev) => {
 	if (ev.target.classList.contains("evo-vue-carousel__viewport-track") === false) {
 		return;
 	}
+	if (props.developer) {
+		console.log("[Slider.vue]: onSlideTransitionEnd called");
+	}
+
 	disableTransition.value = true;
 	await nextFrame();
 
