@@ -1,6 +1,6 @@
 <template>
 	<div
-		ref="viewportRef"
+		ref="viewport"
 		class="evo-vue-carousel__viewport evo-vue-carousel__viewport--slider relative flex w-full h-full max-h-full overflow-hidden"
 		:data-width="sliderWidth"
 		:data-height="sliderHeight"
@@ -40,7 +40,7 @@ import { useCarouselClient } from "../../composables/useCarousel";
 import { nextFrame } from "../../utils/animation";
 import { loopedValue } from "../../utils/loopedValue";
 import { useElementSize } from "@vueuse/core";
-import { ref, computed, watch, h, normalizeClass } from "vue";
+import { ref, computed, watch, h, normalizeClass, useTemplateRef } from "vue";
 import { replaceChildren } from "@skirtle/vue-vnode-utils";
 import ViewportSlide from "./Slide";
 import { range } from "es-toolkit";
@@ -130,7 +130,7 @@ const updateOffset = (index) => {
 	return centre * -1;
 };
 
-const viewportRef = ref(null);
+const viewportRef = useTemplateRef("viewport");
 const { width: sliderWidth, height: sliderHeight } = useElementSize(viewportRef);
 const defaultSlideWidth = computed(() => {
 	const totalGap = config.value.gap > 0 ? config.value.gap * (config.value.perPage - 1) : 0;
@@ -233,6 +233,27 @@ watch(isHovered, (v) => {
 /* *********************************************
  * TRACK
  * ******************************************* */
+// Handle situations where the slider is init without a physical width
+watch(
+	sliderWidth,
+	async (newWidth, oldWidth) => {
+		if (newWidth === 0 || !props.isInit) return;
+
+		if (oldWidth === 0) {
+			disableTransition.value = true;
+			await nextFrame();
+
+			offset.value = updateOffset(currentIndex.value);
+			offsetStart.value = offset.value;
+
+			await nextFrame();
+			disableTransition.value = false;
+		}
+	},
+	{
+		immediate: true,
+	},
+);
 const getAbsolutePosition = (index, position) => {
 	const offset = position === "prefix" ? 0 : position === "suffix" ? props.totalSlides * 2 : props.totalSlides;
 	return offset + index;
