@@ -107,10 +107,26 @@ const trackStyle = computed(() => ({
 }));
 
 const updateOffset = (index) => {
+	if (props.developer) {
+		console.log("[Slider.vue]: called updateOffset with " + index);
+	}
 	const slideWidth = parseFloat(defaultSlideWidth.value);
 
 	offsetSlides.value = config.value.wrap ? props.totalSlides + index : index;
 	const centre = (slideWidth + config.value.gap) * offsetSlides.value;
+	if (props.developer) {
+		console.table({
+			index,
+			wrap: config.value.wrap,
+			gap: config.value.gap,
+			slideWidth,
+			totalSlides: props.totalSlides,
+			offsetSlides: offsetSlides.value,
+			centre,
+			returnValue: centre * -1,
+		});
+	}
+
 	return centre * -1;
 };
 
@@ -158,6 +174,9 @@ watch(
 		}
 		if (isNavigating.value === false) {
 			offsetStart.value = offset.value;
+			if (props.developer) {
+				console.log("[Slider.vue]: currentIndex watch callback updated offsetStart to " + offsetStart.value);
+			}
 		}
 		offset.value = updateOffset(v);
 		if (props.developer) {
