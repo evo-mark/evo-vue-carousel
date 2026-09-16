@@ -275,8 +275,8 @@ const props = defineProps({
 		default: "Image Carousel",
 	},
 	transitionDuration: {
-		type: Boolean,
-		default: false,
+		type: Number,
+		default: null,
 	},
 	developer: {
 		type: Boolean,
