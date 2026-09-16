@@ -63,26 +63,28 @@
 			<AutoplayControls />
 		</ForwardSlots>
 		<div v-if="props.developer" class="px-4 pt-2 pb-8">
-			<table>
-				<tbody id="dev-stats">
-					<tr>
-						<td>Current Index:</td>
-						<td>{{ currentIndex }}</td>
-					</tr>
-					<tr>
-						<td>Is Init:</td>
-						<td>{{ isInit }}</td>
-					</tr>
-					<tr>
-						<td>Is Navigating:</td>
-						<td>{{ isNavigating }}</td>
-					</tr>
-					<tr>
-						<td>Slide Count:</td>
-						<td>{{ slideCount }}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="inline-block border rounded-lg overflow-hidden">
+				<table class="border-collapse text-sm">
+					<tbody id="dev-stats">
+						<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+							<td class="px-2 py-1">Current Index:</td>
+							<td class="px-2 py-1">{{ currentIndex }}</td>
+						</tr>
+						<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+							<td class="px-2 py-1">Is Init:</td>
+							<td class="px-2 py-1">{{ isInit }}</td>
+						</tr>
+						<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+							<td class="px-2 py-1">Is Navigating:</td>
+							<td class="px-2 py-1">{{ isNavigating }}</td>
+						</tr>
+						<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+							<td class="px-2 py-1">Slide Count:</td>
+							<td class="px-2 py-1">{{ slideCount }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 </template>

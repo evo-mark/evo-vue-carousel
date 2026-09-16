@@ -9,25 +9,25 @@
 			<SliderTrack :gap="config.gap" />
 		</ForwardSlots>
 		<Teleport v-if="props.developer" to="#dev-stats" defer>
-			<tr>
-				<td>Offset:</td>
-				<td>{{ offset }}</td>
+			<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+				<td class="px-2 py-1">Offset:</td>
+				<td class="px-2 py-1">{{ offset }}</td>
 			</tr>
-			<tr>
-				<td>Offset Start:</td>
-				<td>{{ offsetStart }}</td>
+			<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+				<td class="px-2 py-1">Offset Start:</td>
+				<td class="px-2 py-1">{{ offsetStart }}</td>
 			</tr>
-			<tr>
-				<td>Offset Slides:</td>
-				<td>{{ offsetSlides }}</td>
+			<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+				<td class="px-2 py-1">Offset Slides:</td>
+				<td class="px-2 py-1">{{ offsetSlides }}</td>
 			</tr>
-			<tr>
-				<td>Visible Slides:</td>
-				<td>{{ visibleSlides }}</td>
+			<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+				<td class="px-2 py-1">Visible Slides:</td>
+				<td class="px-2 py-1">{{ visibleSlides }}</td>
 			</tr>
-			<tr>
-				<td>Is Hovered:</td>
-				<td>{{ isHovered }}</td>
+			<tr class="border-b odd:bg-zinc-100 last:border-0 hover:bg-zinc-200/50">
+				<td class="px-2 py-1">Is Hovered:</td>
+				<td class="px-2 py-1">{{ isHovered }}</td>
 			</tr>
 		</Teleport>
 	</div>
@@ -267,7 +267,7 @@ const SliderTrack = {
 };
 </script>
 
-<style lang="postcss" scoped>
+<style scoped>
 .evo-vue-carousel__viewport-track {
 	--slide-width: v-bind(defaultSlideWidth);
 }
