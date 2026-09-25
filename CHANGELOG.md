@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.2.0
+- **Feature**: Support swipe navigation of carousel
+- **Feature**: Added `swipeAxis`, `swipeThreshold` and `disableSwipe` props to component
+
 ## v1.1.0
 
 - **Feature**: Add support for Tailwind v4 (`@import "evo-vue-carousel/style";`)
