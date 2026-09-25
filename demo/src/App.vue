@@ -42,7 +42,9 @@
 			slide-transition-timing-class="ease-in-out"
 			disable-on-navigation
 			pagination-background-class="py-1 bg-white/50 backdrop-blur"
-			developer
+			navigation-prev-class=""
+			navigation-next-class=""
+			hide-pagination
 		>
 			<div v-for="(slide, index) in slides" :key="slide" class="relative w-full h-full">
 				<img :src="slide" class="w-full h-full object-cover" loading="lazy" />

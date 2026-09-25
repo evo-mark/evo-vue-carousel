@@ -77,9 +77,12 @@ export const useCarouselHost = (modelValue, props, slideCount, sliderRef, manual
 	return {
 		config,
 		currentIndex: readonly(modelValue),
+		setCurrentIndex,
 		isHovered,
 		isInit,
 		isNavigating,
+		pauseAutoplay,
+		resumeAutoplay,
 	};
 };
 

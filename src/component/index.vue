@@ -90,8 +90,9 @@
 </template>
 
 <script setup>
-import { ref, useSlots } from "vue";
+import { ref, useSlots, watch } from "vue";
 import { ForwardSlots } from "@evomark/vue-forward-slots";
+import { useSwipe } from "@vueuse/core";
 import {
 	EvoVueCarouselPagination,
 	EvoVueCarouselNavigation,
@@ -102,11 +103,13 @@ import AutoplayControls from "./controls/Autoplay.vue";
 import { EVO_VUE_CAROUSEL_MODE } from "../utils/constants.js";
 import { useRegisterSlide } from "../composables/useRegisterSlide.js";
 import { useCarouselHost } from "../composables/useCarousel.js";
+import { checkPosition } from "../utils/checkPosition.js";
 
 defineOptions({
 	name: "EvoVueCarousel",
 });
 
+const emit = defineEmits(["swipe-start", "swipe", "swipe-end"]);
 const modelValue = defineModel({
 	type: Number,
 	default: 0,
@@ -149,6 +152,19 @@ const props = defineProps({
 	gap: {
 		type: [String, Number],
 		default: 0,
+	},
+	swipeAxis: {
+		type: String,
+		default: "horizontal",
+		validator: (v) => ["horizontal", "vertical"].includes(v),
+	},
+	swipeThreshold: {
+		type: Number,
+		default: 50,
+	},
+	disableSwipe: {
+		type: Boolean,
+		default: false,
 	},
 	/**
 	 * @namespace Classes
@@ -243,26 +259,44 @@ const props = defineProps({
 		type: String,
 		default: "translate-x-full",
 	},
+	/**
+	 * @namespace Transition
+	 */
 	transitionSpeed: {
 		type: [String, Number],
 		default: 200,
 	},
+	/**
+	 * @namespace Transition
+	 */
 	slideTransitionTimingClass: {
 		type: String,
 		default: "ease-linear",
 	},
+	/**
+	 * @namespace Transition
+	 */
 	pauseOnHover: {
 		type: Boolean,
 		default: false,
 	},
+	/**
+	 * @namespace Transition
+	 */
 	disableOnNavigation: {
 		type: Boolean,
 		default: false,
 	},
+	/**
+	 * @namespace Transition
+	 */
 	hoverDelayEnter: {
 		type: [String, Number],
 		default: 0,
 	},
+	/**
+	 * @namespace Transition
+	 */
 	hoverDelayLeave: {
 		type: [String, Number],
 		default: 0,
@@ -287,11 +321,45 @@ const props = defineProps({
 const sliderRef = ref(null);
 const slots = useSlots();
 const { slideCount, isInit: sliderIsInit } = useRegisterSlide();
-const { config, isHovered, isInit, isNavigating, currentIndex } = useCarouselHost(
-	modelValue,
-	props,
-	slideCount,
-	sliderRef,
-	!!slots.controls,
-);
+const { config, isHovered, isInit, isNavigating, currentIndex, setCurrentIndex, pauseAutoplay, resumeAutoplay } =
+	useCarouselHost(modelValue, props, slideCount, sliderRef, !!slots.controls);
+
+/* *********************************************************
+ * Swipe
+ ********************************************************* */
+
+const { direction: swipeDirection } = useSwipe(sliderRef, {
+	threshold: props.swipeThreshold,
+});
+watch(swipeDirection, (d) => {
+	if (props.disableSwipe) return;
+
+	const resetAutoplay = () => {
+		pauseAutoplay();
+		resumeAutoplay();
+	};
+
+	const next = () => {
+		setCurrentIndex(currentIndex.value + config.value.slideBy);
+		resetAutoplay();
+	};
+	const prev = () => {
+		setCurrentIndex(currentIndex.value - config.value.slideBy);
+		resetAutoplay();
+	};
+
+	if (props.swipeAxis === "horizontal") {
+		if (d === "left") {
+			next();
+		} else if (d === "right") {
+			prev();
+		}
+	} else if (props.swipeAxis === "vertical") {
+		if (d === "up") {
+			next();
+		} else if (d === "down") {
+			prev();
+		}
+	}
+});
 </script>
